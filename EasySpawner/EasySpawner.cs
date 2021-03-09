@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.0")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.1")]
     [BepInProcess("valheim.exe")]
     public class EasySpawner : BaseUnityPlugin
     {
@@ -99,13 +99,15 @@ namespace EasySpawner
                 return;
             }
 
-            string pathToAsset = Path.Combine(Paths.PluginPath, "EasySpawner", assetFileName);
+            string pathToAsset = Path.Combine(Paths.PluginPath, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), assetFileName);
             menuAssetBundle = AssetBundle.LoadFromFile(pathToAsset);
 
             if (menuAssetBundle)
                 Debug.Log("Easy spawner: menu asset bundle loaded");
             else
+            {
                 Debug.Log("Easy spawner: menu asset bundle failed to load");
+            }
         }
 
         private void CreateMenu()
