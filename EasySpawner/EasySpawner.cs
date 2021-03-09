@@ -5,16 +5,22 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
 using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.0.0.0")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.0")]
     [BepInProcess("valheim.exe")]
     public class EasySpawner : BaseUnityPlugin
     {
+        public static ConfigEntry<string> firstOpenHotkey;
+        public static ConfigEntry<string> secondOpenHotkey;
+        public static ConfigEntry<string> firstSpawnHotkey;
+        public static ConfigEntry<string> secondSpawnHotkey;
+
         public static List<string> prefabNames = new List<string>();
         private static List<string> playerNames = new List<string>();
 
@@ -43,11 +49,16 @@ namespace EasySpawner
 
             harmony = new Harmony("cooley.easyspawner");
             harmony.PatchAll();
+
+            firstOpenHotkey = Config.Bind("Hotkeys", "firstOpenHotkey", "/", "Main hotkey to show/hide the menu. To find appropriate hotkeys use https://answers.unity.com/questions/762073/c-list-of-string-name-for-inputgetkeystring-name.html");
+            secondOpenHotkey = Config.Bind("Hotkeys", "secondOpenHotkey", "[/]", "Secondary hotkey to show/hide the menu");
+            firstSpawnHotkey = Config.Bind("Hotkeys", "firstSpawnHotkey", "=", "Main hotkey to spawn selected prefab");
+            secondSpawnHotkey = Config.Bind("Hotkeys", "secondSpawnHotkey", "[+]", "Secondary hotkey to spawn selected prefab");
         }
 
         void Update()
         {
-            if ((Input.GetKeyDown(KeyCode.Slash) || Input.GetKeyDown(KeyCode.KeypadDivide)) && Player.m_localPlayer)
+            if ((Input.GetKeyDown(firstOpenHotkey.Value) || Input.GetKeyDown(secondOpenHotkey.Value)) && Player.m_localPlayer)
             {
                 if (!menuGameObject)
                     CreateMenu();
@@ -57,7 +68,7 @@ namespace EasySpawner
 
             if (menuGameObject)
             {
-                if ((Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus)))
+                if ((Input.GetKeyDown(firstSpawnHotkey.Value) || Input.GetKeyDown(secondSpawnHotkey.Value)))
                 {
                     spawnButton.onClick.Invoke();
                 }
