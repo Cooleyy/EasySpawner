@@ -3,7 +3,7 @@
 Easy to use Item/NPC/Prefab spawner 
 
 Easy spawner provides a simple and easy to use UI for spawning any Valheim prefab inside the game. 
-Use this mod to spawn in items or enemies (of any level!) or just experiement spawning any gameobject possible (includes fx, vfx, and sfx)
+Use this mod to spawn in items or enemies (of any level!) or just experiment spawning any gameobject possible (includes fx, vfx, and sfx)
 While in game press "/" or "Numpad /" to show/hide the menu.
 
 The main feature of the provided menu is a search field that when typed into updates a dropdown of prefabs that contain the search term (non case-sensitive).
@@ -18,7 +18,7 @@ Note: The prefab names may differ from the in game name. E.g. The 5th boss Yaglu
 ## Menu UI
 <html>
 <img src="https://john2143.com/f/oTub.png" width="450">
-</html
+</html>
 
 Example. Entering "copper" will provide all prefabs with "copper" contained in the name, here it provide Copper bar, Copper ore, Copper knife and three variants of a copper vein.
 
@@ -46,7 +46,7 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 </html>
 
 * You can tick the "Put in inventory" toggle to immediately place the item in your inventory. 
-*Note: this only works for item drops and only works on yourself, if you tick this and try on other players it will just spawn infront of them as normal*
+*Note: this only works for item drops and only works on yourself, if you tick this and try on other players it will just spawn in front of them as normal*
 
 * You can go over the normal stack size limit by ticking the "Ignore stack size" toggle. E.g. a 999 stack of arrows
 
