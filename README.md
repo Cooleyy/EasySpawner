@@ -61,12 +61,6 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 
 In your BepInEx/Config there is a config file that can be used to change the hotkeys to open the menu or spawn items. Be aware setting this to a letter will cause the menu to close if you type it in the search box!
 
-## Known Issues
-
-Most Mod managers (r2modman especially) will break this mod usually by changing the folder names/structure. Manually install this mod with BepInEx. 
-
-Some times the coroutine checking for changes in the player list is killed unexepectedly.
-
 ## Installation
 
 1. [Install BepInEx for Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
@@ -74,6 +68,12 @@ Some times the coroutine checking for changes in the player list is killed unexe
 2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll and Assetbundle file in a folder called "EasySpawner" in your BepInEx plugins folder.
 
 *Note: The Folder name and Assetbundle file name must be Exactly "EasySpawner" and "EasySpawnerAssetBundle" !*
+
+## Known Issues
+
+Most Mod managers (r2modman especially) will break this mod usually by changing the folder names/structure. Manually install this mod with BepInEx. 
+
+Some times the coroutine checking for changes in the player list is killed unexepectedly.
 
 ## Changelog
 
