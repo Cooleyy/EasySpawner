@@ -4,7 +4,8 @@ Easy to use Item/NPC/Prefab spawner
 
 Easy spawner provides a simple and easy to use UI for spawning any Valheim prefab inside the game. 
 Use this mod to spawn in items or enemies (of any level!) or just experiment spawning any gameobject possible (includes fx, vfx, and sfx)
-While in game press "/" or "Numpad /" to show/hide the menu.
+
+While in game press "/" or "Numpad /" to show/hide the menu. Hotkey can be changed in config.
 
 The main feature of the provided menu is a search field that when typed into updates a dropdown of prefabs that contain the search term (non case-sensitive).
 The prefabs will contain all manner of gameobjects from items, enemies, world objects, fx, vfx, sfx and anything else in the game.
@@ -54,7 +55,11 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 <img src="https://john2143.com/f/UYIf.png" width="450">
 </html>
 
-* By default the dropdown only fills with up to 100 search results as large dropdowns can cause a bit of lag when opened, check the "Show > 100 search results" toggle to fill the dropdown with every result found. (Dropdown with every single prefab can lag the game for a few seconds)
+* By default the dropdown only fills with up to 100 search results as large dropdowns can cause a bit of lag when opened, check the "Show > 100 search results" toggle to fill the dropdown with every result found. (Dropdown with every single prefab can lag the game for a few seconds)*
+
+## Config
+
+In your BepInEx/Config there is a config file that can be used to change the hotkeys to open the menu or spawn items. Be aware setting this to a letter will cause the menu to close if you type it in the search box!
 
 ## Installation
 
@@ -63,3 +68,9 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll and Assetbundle file in a folder called "EasySpawner" in your BepInEx plugins folder.
 
 *Note: The Folder name and Assetbundle file name must be Exactly "EasySpawner" and "EasySpawnerAssetBundle" !*
+
+## Changelog
+
+#### 1.1.0
+
+* Added config file to change hotkeys
