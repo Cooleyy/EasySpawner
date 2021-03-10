@@ -325,6 +325,8 @@ namespace EasySpawner
                             SpawnItem(pickup, prefab, player);
                         }
                     }
+                    itemPrefab.m_itemData.m_stack = 1;
+                    itemPrefab.m_itemData.m_quality = 1;
                 }
                 else
                 {
