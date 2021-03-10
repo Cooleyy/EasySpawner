@@ -67,11 +67,7 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 
 2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll and Assetbundle file in a folder called "EasySpawner" in your BepInEx plugins folder.
 
-*Note: The Folder name and Assetbundle file name must be Exactly "EasySpawner" and "EasySpawnerAssetBundle" !*
-
 ## Known Issues
-
-Most Mod managers (r2modman especially) will break this mod usually by changing the folder names/structure. Manually install this mod with BepInEx. 
 
 Some times the coroutine checking for changes in the player list is killed unexepectedly.
 
