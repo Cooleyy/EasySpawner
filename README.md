@@ -73,6 +73,14 @@ Some times the coroutine checking for changes in the player list is killed unexe
 
 ## Changelog
 
+#### 1.1.2
+
+* Fixed conflict with Extended Item data mod
+
+#### 1.1.1
+
+* No longer needs exact file name, should fix issues with mod managers
+
 #### 1.1.0
 
 * Added config file to change hotkeys
