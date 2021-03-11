@@ -12,14 +12,19 @@ using UnityEngine.UI;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.2")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.3")]
     [BepInProcess("valheim.exe")]
     public class EasySpawner : BaseUnityPlugin
     {
         public static ConfigEntry<string> firstOpenHotkey;
+        public static ConfigEntry<string> firstOpenHotkeyModifier;
         public static ConfigEntry<string> secondOpenHotkey;
         public static ConfigEntry<string> firstSpawnHotkey;
+        public static ConfigEntry<string> firstSpawnHotkeyModifier;
         public static ConfigEntry<string> secondSpawnHotkey;
+
+        public static bool openHotkeyModifierSet;
+        public static bool spawnHotkeyModifierSet;
 
         public static List<string> prefabNames = new List<string>();
         private static List<string> playerNames = new List<string>();
@@ -51,14 +56,26 @@ namespace EasySpawner
             harmony.PatchAll();
 
             firstOpenHotkey = Config.Bind("Hotkeys", "firstOpenHotkey", "/", "Main hotkey to show/hide the menu. To find appropriate hotkeys use https://answers.unity.com/questions/762073/c-list-of-string-name-for-inputgetkeystring-name.html");
+            firstOpenHotkeyModifier = Config.Bind("Hotkeys", "firstOpenHotkeyModifier", "", "Optional Modifier to the firstOpenHotkey. Setting this will mean you have to press firstOpenHotkey + firstOpenHotkeyModifier to open/hide the menu. E.g. set this to left alt");
             secondOpenHotkey = Config.Bind("Hotkeys", "secondOpenHotkey", "[/]", "Secondary hotkey to show/hide the menu");
             firstSpawnHotkey = Config.Bind("Hotkeys", "firstSpawnHotkey", "=", "Main hotkey to spawn selected prefab");
+            firstSpawnHotkeyModifier = Config.Bind("Hotkeys", "firstSpawnHotkeyModifier", "", "Optional Modifier to the firstSpawnHotkey. Setting this will mean you have to press firstSpawnHotkey + firstSpawnHotkeyModifier to spawn selected prefab. E.g. set this to left alt");
             secondSpawnHotkey = Config.Bind("Hotkeys", "secondSpawnHotkey", "[+]", "Secondary hotkey to spawn selected prefab");
+
+            firstOpenHotkey.Value = firstOpenHotkey.Value.ToLower();
+            firstOpenHotkeyModifier.Value = firstOpenHotkeyModifier.Value.ToLower();
+            secondOpenHotkey.Value = secondOpenHotkey.Value.ToLower();
+            firstSpawnHotkey.Value = firstSpawnHotkey.Value.ToLower();
+            firstSpawnHotkeyModifier.Value = firstSpawnHotkeyModifier.Value.ToLower();
+            secondSpawnHotkey.Value = secondSpawnHotkey.Value.ToLower();
+
+            openHotkeyModifierSet = !string.IsNullOrEmpty(firstOpenHotkeyModifier.Value);
+            spawnHotkeyModifierSet = !string.IsNullOrEmpty(firstSpawnHotkeyModifier.Value);
         }
 
         void Update()
         {
-            if ((Input.GetKeyDown(firstOpenHotkey.Value) || Input.GetKeyDown(secondOpenHotkey.Value)) && Player.m_localPlayer)
+            if (IfMenuHotkeyPressed() && Player.m_localPlayer)
             {
                 if (!menuGameObject)
                     CreateMenu();
@@ -66,13 +83,26 @@ namespace EasySpawner
                     menuGameObject.SetActive(!menuGameObject.activeSelf);
             }
 
-            if (menuGameObject)
+            if (menuGameObject && IfSpawnHotkeyPressed())
             {
-                if ((Input.GetKeyDown(firstSpawnHotkey.Value) || Input.GetKeyDown(secondSpawnHotkey.Value)))
-                {
-                    spawnButton.onClick.Invoke();
-                }
+                spawnButton.onClick.Invoke();
             }
+        }
+
+        bool IfMenuHotkeyPressed()
+        {
+            if (!openHotkeyModifierSet)
+                return Input.GetKeyDown(firstOpenHotkey.Value) || Input.GetKeyDown(secondOpenHotkey.Value);
+            else
+                return (Input.GetKey(firstOpenHotkeyModifier.Value) && Input.GetKeyDown(firstOpenHotkey.Value)) || Input.GetKeyDown(secondOpenHotkey.Value);
+        }
+
+        bool IfSpawnHotkeyPressed()
+        {
+            if (!spawnHotkeyModifierSet)
+                return Input.GetKeyDown(firstSpawnHotkey.Value) || Input.GetKeyDown(secondSpawnHotkey.Value);
+            else
+                return (Input.GetKey(firstSpawnHotkeyModifier.Value) && Input.GetKeyDown(firstSpawnHotkey.Value)) || Input.GetKeyDown(secondSpawnHotkey.Value);
         }
 
         private void OnDestroy()
