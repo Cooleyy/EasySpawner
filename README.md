@@ -73,6 +73,10 @@ Some times the coroutine checking for changes in the player list is killed unexe
 
 ## Changelog
 
+#### 1.1.3
+
+* Added ability to set hotkey modifiers. E.g. leftAlt + / to open menu
+
 #### 1.1.2
 
 * Fixed conflict with Extended Item data mod
