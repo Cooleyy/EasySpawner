@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.3")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.1.4")]
     [BepInProcess("valheim.exe")]
     public class EasySpawner : BaseUnityPlugin
     {
@@ -340,6 +340,11 @@ namespace EasySpawner
                         else
                         {
                             int maxStack = itemPrefab.m_itemData.m_shared.m_maxStackSize;
+
+                            //Some items maxStackSize incorrectly set to 0
+                            if (maxStack < 1)
+                                maxStack = 1;
+
                             itemPrefab.m_itemData.m_stack = maxStack;
                             noOfStacks = amount / maxStack;
                             lastStack = amount % maxStack;
