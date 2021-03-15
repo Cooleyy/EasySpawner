@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace EasySpawner
+namespace EasySpawner.UI
 {
 	public class UIElementDragger : MonoBehaviour, IDragHandler, IBeginDragHandler
 	{

@@ -32,9 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="EasySpawner.cs" />
+    <Compile Include="Config\EasySpawnerConfig.cs" />
+    <Compile Include="EasySpawnerPlugin.cs" />
+    <Compile Include="Patches\FejdStartupLoadMainScenePatch.cs" />
+    <Compile Include="Patches\PlayerControllerTakeInputPatch.cs" />
+    <Compile Include="Patches\ZNetSceneShutdownPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIElementDragger.cs" />
+    <Compile Include="UI\EasySpawnerMenu.cs" />
+    <Compile Include="UI\UIElementDragger.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -74,5 +79,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
