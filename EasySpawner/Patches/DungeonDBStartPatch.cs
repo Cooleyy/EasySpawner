@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EasySpawner.Patches
 {
-    //Patch LoadMainScene on FejdStartup to load the menu asset bundle and get the prefabNames from ZNetScene
+    //Patch Start on DungeonDB to load the menu asset bundle and get the prefabNames from ZNetScene
     [HarmonyPatch(typeof(DungeonDB), "Start")]
     class DungeonDB_Start_Patch
     {
