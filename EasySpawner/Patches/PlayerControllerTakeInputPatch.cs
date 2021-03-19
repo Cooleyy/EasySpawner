@@ -6,7 +6,7 @@ namespace EasySpawner.Patches
     [HarmonyPatch(typeof(PlayerController), "TakeInput")]
     static class PlayerControllerTakeInputPatch
     {
-        static void Postfix(ref bool __result)
+        private static void Postfix(ref bool __result)
         {
             if (EasySpawnerPlugin.menuGameObject != null && EasySpawnerPlugin.menuGameObject.activeSelf && (EasySpawnerPlugin.menu.SearchField.isFocused || EasySpawnerPlugin.menu.AmountField.isFocused || EasySpawnerPlugin.menu.LevelField.isFocused))
                 __result = false;

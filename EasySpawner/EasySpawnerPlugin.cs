@@ -5,12 +5,13 @@ using System.Collections;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UI;
 using EasySpawner.UI;
 using EasySpawner.Config;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.2.0")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.2.1")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {

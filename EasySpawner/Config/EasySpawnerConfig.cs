@@ -42,9 +42,9 @@ namespace EasySpawner.Config
             UndoHotkey.Value = UndoHotkey.Value.ToLower();
             UndoHotkeyModifier.Value = UndoHotkeyModifier.Value.ToLower();
 
-            OpenHotkeyModifierSet = !string.IsNullOrEmpty(FirstOpenHotkeyModifier.Value);
-            SpawnHotkeyModifierSet = !string.IsNullOrEmpty(FirstSpawnHotkeyModifier.Value);
-            UndoHotkeyModifierSet = !string.IsNullOrEmpty(UndoHotkeyModifier.Value);
+            OpenHotkeyModifierSet = !string.IsNullOrWhiteSpace(FirstOpenHotkeyModifier.Value);
+            SpawnHotkeyModifierSet = !string.IsNullOrWhiteSpace(FirstSpawnHotkeyModifier.Value);
+            UndoHotkeyModifierSet = !string.IsNullOrWhiteSpace(UndoHotkeyModifier.Value);
         }
 
         public bool IfUndoHotkeyPressed()

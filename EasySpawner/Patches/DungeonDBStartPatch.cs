@@ -1,12 +1,11 @@
-﻿using System.Threading;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace EasySpawner.Patches
 {
     //Patch LoadMainScene on FejdStartup to load the menu asset bundle and get the prefabNames from ZNetScene
-    [HarmonyPatch(typeof(FejdStartup), "LoadMainScene")]
-    class FejdStartupLoadMainScenePatch
+    [HarmonyPatch(typeof(DungeonDB), "Start")]
+    class DungeonDB_Start_Patch
     {
         private static void Postfix()
         {
@@ -14,21 +13,20 @@ namespace EasySpawner.Patches
             EasySpawnerPlugin.LoadAsset(EasySpawnerPlugin.assetBundleName);
             Debug.Log("Easy spawner: Easy spawner loaded assets");
 
-            //Start thread to wait for ZNetScene then get prefabNames
-            new Thread(() =>
+            if (EasySpawnerPlugin.prefabNames.Count == 0)
             {
-                while (!ZNetScene.instance)
-                    Thread.Sleep(100);
-
-                //If we do not have the list of prefabs, retrieve them from ZNetScene
-                if (EasySpawnerPlugin.prefabNames.Count == 0 && ZNetScene.instance)
+                if (!ZNetScene.instance)
+                {
+                    Debug.LogError("EasySpawner: Can't load prefab due to ZNetScene.instance is null");
+                }
+                else
                 {
                     foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
                     {
                         EasySpawnerPlugin.prefabNames.Add(prefab.name);
                     }
                 }
-            }).Start();
+            }
         }
     }
 }
