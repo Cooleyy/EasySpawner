@@ -5,13 +5,12 @@ using System.Collections;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
 using EasySpawner.UI;
 using EasySpawner.Config;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.2.1")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.3.0")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {
@@ -67,7 +66,7 @@ namespace EasySpawner
                 {
                     if(config.IfSpawnHotkeyPressed())
                     {
-                        Debug.Log("Spawn hotkey pressed");
+                        Debug.Log("Easy spawner: Spawn hotkey pressed");
                         menu.SpawnButton.onClick.Invoke();
                     }
                     else if (config.IfUndoHotkeyPressed() && spawnActions.Count > 0)

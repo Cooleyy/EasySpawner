@@ -22,8 +22,6 @@ namespace EasySpawner.UI
         public PrefabItem[] PrefabItems;
         public PrefabItem SelectedPrefabItem;
 
-        private static readonly string PlaceholderOptionText = "Choose object to spawn";
-
         public void CreateMenu(GameObject menuGameObject)
         {
             PrefabScrollView = menuGameObject.transform.Find("PrefabScrollView").GetComponent<ScrollRect>();
