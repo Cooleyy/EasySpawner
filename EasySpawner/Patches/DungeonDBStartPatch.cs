@@ -25,6 +25,8 @@ namespace EasySpawner.Patches
                     {
                         EasySpawnerPlugin.prefabNames.Add(prefab.name);
                     }
+
+                    EasySpawnerPlugin.prefabNames.Sort();
                 }
             }
         }
