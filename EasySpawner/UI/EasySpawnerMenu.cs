@@ -9,13 +9,11 @@ namespace EasySpawner.UI
     public class EasySpawnerMenu
     {
         public Dropdown PlayerDropdown;
-        public Text PrefabDropdownLabel;
         public InputField SearchField;
         public InputField AmountField;
         public InputField LevelField;
         public Toggle PutInInventoryToggle;
         public Toggle IgnoreStackSizeToggle;
-        public Toggle SearchSizeToggle;
         public Button SpawnButton;
         public Text SpawnText;
         public Text UndoText;
@@ -29,7 +27,6 @@ namespace EasySpawner.UI
         public void CreateMenu(GameObject menuGameObject)
         {
             PrefabScrollView = menuGameObject.transform.Find("PrefabScrollView").GetComponent<ScrollRect>();
-            PrefabDropdownLabel = menuGameObject.transform.Find("PrefabDropdown").Find("Label").GetComponent<Text>();
 
             PlayerDropdown = menuGameObject.transform.Find("PlayerDropdown").GetComponent<Dropdown>();
 
@@ -41,8 +38,6 @@ namespace EasySpawner.UI
 
             PutInInventoryToggle = menuGameObject.transform.Find("PutInInventoryToggle").GetComponent<Toggle>();
             IgnoreStackSizeToggle = menuGameObject.transform.Find("IgnoreStackSizeToggle").GetComponent<Toggle>();
-            SearchSizeToggle = menuGameObject.transform.Find("SearchSizeToggle").GetComponent<Toggle>();
-            SearchSizeToggle.onValueChanged.AddListener(delegate { RebuildPrefabDropdown(); });//Rebuild prefabdropdown when toggled
 
             SpawnButton = menuGameObject.transform.Find("SpawnButton").GetComponent<Button>();
             SpawnButton.onClick.AddListener(SpawnButtonPress);
@@ -197,7 +192,6 @@ namespace EasySpawner.UI
 
             float scrollViewHeight = downY;
             PrefabScrollView.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scrollViewHeight);
-            PrefabDropdownLabel.text = PlaceholderOptionText;
 
             // unselect prefab is none is active
             if (!anyActive)
@@ -208,7 +202,6 @@ namespace EasySpawner.UI
 
         public void Destroy()
         {
-            SearchSizeToggle.onValueChanged.RemoveAllListeners();
             SearchField.onValueChanged.RemoveAllListeners();
             SpawnButton.onClick.RemoveAllListeners();
         }

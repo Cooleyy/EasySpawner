@@ -113,7 +113,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &68632435
+--- !u!1001 &267370316
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -178,7 +178,7 @@ Prefab:
     - target: {fileID: 224780874275008876, guid: 536515a054ff4f9499d2187c68a3e011,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 315
+      value: 380
       objectReference: {fileID: 0}
     - target: {fileID: 224780874275008876, guid: 536515a054ff4f9499d2187c68a3e011,
         type: 2}
@@ -228,57 +228,12 @@ Prefab:
     - target: {fileID: 224897090950217610, guid: 536515a054ff4f9499d2187c68a3e011,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 224900994921517052, guid: 536515a054ff4f9499d2187c68a3e011,
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 0.000015258789
-      objectReference: {fileID: 0}
-    - target: {fileID: 224897090950217610, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224393838227182960, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224393838227182960, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224393838227182960, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: -17
-      objectReference: {fileID: 0}
-    - target: {fileID: 224393838227182960, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: -17
-      objectReference: {fileID: 0}
-    - target: {fileID: 224124100872357474, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224124100872357474, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: -17
-      objectReference: {fileID: 0}
-    - target: {fileID: 224798166774550486, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224798166774550486, guid: 536515a054ff4f9499d2187c68a3e011,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 536515a054ff4f9499d2187c68a3e011, type: 2}
@@ -527,7 +482,7 @@ Transform:
 RectTransform:
   m_PrefabParentObject: {fileID: 224780874275008876, guid: 536515a054ff4f9499d2187c68a3e011,
     type: 2}
-  m_PrefabInternal: {fileID: 68632435}
+  m_PrefabInternal: {fileID: 267370316}
 --- !u!1 &1748419434
 GameObject:
   m_ObjectHideFlags: 0
