@@ -39,7 +39,6 @@
     <Compile Include="Patches\ZNetSceneShutdownPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\EasySpawnerMenu.cs" />
-    <Compile Include="UI\PrefabItem.cs" />
     <Compile Include="UI\UIElementDragger.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +64,7 @@
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\SteamLibrary\steamapps\common\Valheim\unstripped_corlib\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>bin\Debug\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\Libs\UnityEngine.CoreModule.dll</HintPath>
