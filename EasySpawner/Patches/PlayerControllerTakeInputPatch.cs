@@ -8,7 +8,7 @@ namespace EasySpawner.Patches
     {
         private static void Postfix(ref bool __result)
         {
-            if (EasySpawnerPlugin.menuGameObject != null && EasySpawnerPlugin.menuActive && (EasySpawnerPlugin.menu.SearchField.isFocused || EasySpawnerPlugin.menu.AmountField.isFocused || EasySpawnerPlugin.menu.LevelField.isFocused))
+            if (EasySpawnerPlugin.menuGameObject != null && EasySpawnerPlugin.menuGameObject.activeSelf && (EasySpawnerPlugin.menu.SearchField.isFocused || EasySpawnerPlugin.menu.AmountField.isFocused || EasySpawnerPlugin.menu.LevelField.isFocused))
                 __result = false;
         }
     }
