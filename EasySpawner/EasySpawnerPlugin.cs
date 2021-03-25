@@ -18,6 +18,7 @@ namespace EasySpawner
         private static AssetBundle menuAssetBundle;
         public static GameObject menuPrefab;
         public static GameObject menuGameObject;
+        public static bool menuActive;
 
         public static EasySpawnerMenu menu = new EasySpawnerMenu();
         public static EasySpawnerConfig config = new EasySpawnerConfig();
@@ -50,9 +51,17 @@ namespace EasySpawner
                 if (config.IfMenuHotkeyPressed())
                 {
                     if (!menuGameObject)
+                    {
+                        menuActive = true;
                         CreateMenu();
+                    }
                     else
-                        menuGameObject.SetActive(!menuGameObject.activeSelf);
+                    {
+                        // using menuGameObject.SetActive() causes too much lag, this is a workaround
+                        // only x is scaled to 0 as scrollbars behave strangely
+                        menuActive = !menuActive;
+                        menuGameObject.transform.localScale = menuActive ? Vector3.one : new Vector3(0, 1, 1);
+                    }
                 }
                 else if (menuGameObject)
                 {
@@ -291,7 +300,7 @@ namespace EasySpawner
             {
                 yield return new WaitForSeconds(3);
 
-                if (menuGameObject.activeSelf && ZNet.instance && Player.m_localPlayer)
+                if (menuActive && ZNet.instance && Player.m_localPlayer)
                 {
                     List<string> newPlayerNames = GetPlayerNames();
                     if (newPlayerNames.Count != playerNames.Count)
