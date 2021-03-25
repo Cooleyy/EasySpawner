@@ -5,19 +5,19 @@ using System.Collections;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
 using EasySpawner.UI;
 using EasySpawner.Config;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.2.1")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.3.0")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {
         private static AssetBundle menuAssetBundle;
         public static GameObject menuPrefab;
         public static GameObject menuGameObject;
+        public static bool menuActive;
 
         public static EasySpawnerMenu menu = new EasySpawnerMenu();
         public static EasySpawnerConfig config = new EasySpawnerConfig();
@@ -50,15 +50,23 @@ namespace EasySpawner
                 if (config.IfMenuHotkeyPressed())
                 {
                     if (!menuGameObject)
+                    {
+                        menuActive = true;
                         CreateMenu();
+                    }
                     else
-                        menuGameObject.SetActive(!menuGameObject.activeSelf);
+                    {
+                        // using menuGameObject.SetActive() causes too much lag, this is a workaround
+                        // only x is scaled to 0 as scrollbars behave strangely
+                        menuActive = !menuActive;
+                        menuGameObject.transform.localScale = menuActive ? Vector3.one : new Vector3(0, 1, 1);
+                    }
                 }
                 else if (menuGameObject)
                 {
                     if(config.IfSpawnHotkeyPressed())
                     {
-                        Debug.Log("Spawn hotkey pressed");
+                        Debug.Log("Easy spawner: Spawn hotkey pressed");
                         menu.SpawnButton.onClick.Invoke();
                     }
                     else if (config.IfUndoHotkeyPressed() && spawnActions.Count > 0)
@@ -291,7 +299,7 @@ namespace EasySpawner
             {
                 yield return new WaitForSeconds(3);
 
-                if (menuGameObject.activeSelf && ZNet.instance && Player.m_localPlayer)
+                if (menuActive && ZNet.instance && Player.m_localPlayer)
                 {
                     List<string> newPlayerNames = GetPlayerNames();
                     if (newPlayerNames.Count != playerNames.Count)
