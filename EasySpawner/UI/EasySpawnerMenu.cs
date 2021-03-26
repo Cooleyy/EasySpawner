@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using EasySpawner.Config;
@@ -7,28 +10,29 @@ namespace EasySpawner.UI
 {
     public class EasySpawnerMenu
     {
-        public Dropdown PrefabDropdown;
         public Dropdown PlayerDropdown;
-        public Text PrefabDropdownLabel;
         public InputField SearchField;
         public InputField AmountField;
         public InputField LevelField;
         public Toggle PutInInventoryToggle;
         public Toggle IgnoreStackSizeToggle;
-        public Toggle SearchSizeToggle;
         public Button SpawnButton;
         public Text SpawnText;
         public Text UndoText;
         public Text CloseText;
+        public ScrollRect PrefabScrollView;
+        public PrefabItem[] PrefabItems;
+        public Queue<PrefabItem> PrefabItemPool = new Queue<PrefabItem>();
+        public string SelectedPrefabName;
+        public static Dictionary<string, bool> PrefabNamesSearched = new Dictionary<string, bool>();
+        public List<string> SearchItems = new List<string>();
 
         private static readonly string PlaceholderOptionText = "Choose object to spawn";
 
         public void CreateMenu(GameObject menuGameObject)
         {
-            PrefabDropdown = menuGameObject.transform.Find("PrefabDropdown").GetComponent<Dropdown>();
-            PrefabDropdownLabel = menuGameObject.transform.Find("PrefabDropdown").Find("Label").GetComponent<Text>();
-
             PlayerDropdown = menuGameObject.transform.Find("PlayerDropdown").GetComponent<Dropdown>();
+            PrefabScrollView = menuGameObject.transform.Find("PrefabScrollView").GetComponent<ScrollRect>();
 
             SearchField = menuGameObject.transform.Find("SearchInputField").GetComponent<InputField>();
             SearchField.onValueChanged.AddListener(delegate { RebuildPrefabDropdown(); });
@@ -38,8 +42,6 @@ namespace EasySpawner.UI
 
             PutInInventoryToggle = menuGameObject.transform.Find("PutInInventoryToggle").GetComponent<Toggle>();
             IgnoreStackSizeToggle = menuGameObject.transform.Find("IgnoreStackSizeToggle").GetComponent<Toggle>();
-            SearchSizeToggle = menuGameObject.transform.Find("SearchSizeToggle").GetComponent<Toggle>();
-            SearchSizeToggle.onValueChanged.AddListener(delegate { RebuildPrefabDropdown(); });//Rebuild prefabdropdown when toggled
 
             SpawnButton = menuGameObject.transform.Find("SpawnButton").GetComponent<Button>();
             SpawnButton.onClick.AddListener(SpawnButtonPress);
@@ -70,16 +72,95 @@ namespace EasySpawner.UI
             PlayerDropdown.ClearOptions();
             RebuildPlayerDropdown();
 
-            //Create prefab dropdown initial options
-            PrefabDropdown.ClearOptions();
-            PrefabDropdown.options.Add(new Dropdown.OptionData(PlaceholderOptionText));//Add placeholder option
-            foreach (string prefabName in EasySpawnerPlugin.prefabNames)
+            //Create prefab dropdown pool
+            PrefabItems = new PrefabItem[20];
+            PrefabItem template = PrefabScrollView.content.GetChild(0).gameObject.AddComponent<PrefabItem>();
+            template.rectTransform = template.GetComponent<RectTransform>();
+            template.toggle = template.GetComponent<Toggle>();
+            template.label = template.transform.Find("ItemLabel").GetComponent<Text>();
+            template.originalHeight = template.rectTransform.rect.height;
+            template.gameObject.SetActive(false);
+
+            for (int i = 0; i < 20; i++)
             {
-                if (!SearchSizeToggle.isOn && PrefabDropdown.options.Count >= 100)
-                    break;
-                PrefabDropdown.options.Add(new Dropdown.OptionData(prefabName));
+                GameObject option = UnityEngine.Object.Instantiate(template.gameObject, PrefabScrollView.content);
+                PrefabItem item = option.GetComponent<PrefabItem>();
+                item.toggle.isOn = false;
+                item.toggle.onValueChanged.AddListener(delegate { SelectPrefab(item); });
+                PrefabItemPool.Enqueue(item);
+                PrefabItems[i] = item;
             }
-            PrefabDropdownLabel.text = PlaceholderOptionText;
+
+            PrefabScrollView.onValueChanged.AddListener(UpdateItemPrefabPool);
+            RebuildPrefabDropdown();
+        }
+
+        public void PoolPrefabItem(PrefabItem item)
+        {
+            item.gameObject.SetActive(false);
+            item.posIndex = -1;
+            item.toggle.SetIsOnWithoutNotify(false);
+            PrefabItemPool.Enqueue(item);
+        }
+
+        public void PoolAllPrefabItems()
+        {
+            foreach (PrefabItem item in PrefabItems)
+            {
+                if (PrefabItemPool.Contains(item))
+                    continue;
+
+                PoolPrefabItem(item);
+            }
+        }
+
+        public void UpdateItemPrefabPool(Vector2 slider)
+        {
+            PrefabScrollView.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,(SearchItems.Count - 1) * 20f);
+            Rect scrollRect = PrefabScrollView.GetComponent<RectTransform>().rect;
+            Vector2 scrollPos = PrefabScrollView.content.anchoredPosition;
+
+            // search for items that are out of visible scroll rect
+            foreach (PrefabItem item in PrefabItems)
+            {
+                if (PrefabItemPool.Contains(item))
+                    continue;
+
+                float posY = item.rectTransform.anchoredPosition.y;
+
+                if (posY > -scrollPos.y + 20 || posY < -scrollPos.y - scrollRect.height - 20)
+                    PoolPrefabItem(item);
+            }
+
+            int startIndex = Mathf.Max(0, Mathf.CeilToInt((scrollPos.y - 20) / 20));
+            int maxItems = Mathf.CeilToInt((scrollRect.height + 40) / 20);
+
+            for (int i = startIndex; i < Mathf.Min(startIndex + maxItems, SearchItems.Count - 1); i++)
+            {
+                if (PrefabItems.Any(x => x.posIndex == i))
+                    continue;
+
+                if (PrefabItemPool.Count > 0)
+                {
+                    PrefabItem item = PrefabItemPool.Dequeue();
+                    item.rectTransform.anchoredPosition = new Vector2(0, -i * 20 - 10f);
+                    item.posIndex = i;
+                    item.label.text = SearchItems[i];
+                    item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.label.text);
+                    item.gameObject.SetActive(true);
+                }
+            }
+        }
+
+        private void SelectPrefab(PrefabItem caller)
+        {
+            foreach (PrefabItem prefabItem in PrefabItems)
+            {
+                // Disable all other prefabItems, without calling this method recursively
+                prefabItem.toggle.SetIsOnWithoutNotify(prefabItem == caller);
+            }
+
+            SelectedPrefabName = caller != null ? caller.label.text : "";
         }
 
         public void RebuildPlayerDropdown()
@@ -103,9 +184,9 @@ namespace EasySpawner.UI
 
         private void SpawnButtonPress()
         {
-            if (PrefabDropdown.options.Count == 0 || PrefabDropdown.options[PrefabDropdown.value].text == PlaceholderOptionText)
+            if (SelectedPrefabName == "")
                 return;
-            string prefabName = PrefabDropdown.options[PrefabDropdown.value].text;
+            string prefabName = SelectedPrefabName;
             bool pickup = PutInInventoryToggle.isOn;
             bool ignoreStackSize = IgnoreStackSizeToggle.isOn;
             Player player = Player.m_localPlayer;
@@ -136,27 +217,26 @@ namespace EasySpawner.UI
         //Update dropdown options using new search parameters
         public void RebuildPrefabDropdown()
         {
-            if (PrefabDropdown)
+            SelectPrefab(null);
+            SearchItems.Clear();
+
+            Parallel.ForEach(EasySpawnerPlugin.prefabNames, name =>
             {
-                PrefabDropdown.ClearOptions();
-                foreach (string prefabName in EasySpawnerPlugin.prefabNames)
-                {
-                    if (!SearchSizeToggle.isOn && PrefabDropdown.options.Count >= 100)
-                        break;
-                    if (prefabName.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0)
-                        PrefabDropdown.options.Add(new Dropdown.OptionData(prefabName));
-                }
-                PrefabDropdownLabel.text = PlaceholderOptionText;
-            }
-            else
+                bool isSearched = name.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0;
+                PrefabNamesSearched[name] = isSearched;
+            });
+
+            foreach (KeyValuePair<string, bool> pair in PrefabNamesSearched.Where(pair => pair.Value))
             {
-                Debug.Log("EasySpawner: Cannot rebuild prefab dropdown");
+                SearchItems.Add(pair.Key);
             }
+
+            PoolAllPrefabItems();
+            UpdateItemPrefabPool(new Vector2(PrefabScrollView.horizontalScrollbar.value, PrefabScrollView.verticalScrollbar.value));
         }
 
         public void Destroy()
         {
-            SearchSizeToggle.onValueChanged.RemoveAllListeners();
             SearchField.onValueChanged.RemoveAllListeners();
             SpawnButton.onClick.RemoveAllListeners();
         }
