@@ -27,8 +27,6 @@ namespace EasySpawner.UI
         public static Dictionary<string, bool> PrefabNamesSearched = new Dictionary<string, bool>();
         public List<string> SearchItems = new List<string>();
 
-        private static readonly string PlaceholderOptionText = "Choose object to spawn";
-
         public void CreateMenu(GameObject menuGameObject)
         {
             PlayerDropdown = menuGameObject.transform.Find("PlayerDropdown").GetComponent<Dropdown>();
@@ -160,7 +158,7 @@ namespace EasySpawner.UI
                 prefabItem.toggle.SetIsOnWithoutNotify(prefabItem == caller);
             }
 
-            SelectedPrefabName = caller != null ? caller.label.text : "";
+            SelectedPrefabName = caller != null ? caller.label.text : null;
         }
 
         public void RebuildPlayerDropdown()
@@ -184,7 +182,7 @@ namespace EasySpawner.UI
 
         private void SpawnButtonPress()
         {
-            if (SelectedPrefabName == "")
+            if (SelectedPrefabName == null)
                 return;
             string prefabName = SelectedPrefabName;
             bool pickup = PutInInventoryToggle.isOn;
