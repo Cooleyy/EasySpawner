@@ -224,9 +224,10 @@ namespace EasySpawner.UI
                 PrefabNamesSearched[name] = isSearched;
             });
 
-            foreach (KeyValuePair<string, bool> pair in PrefabNamesSearched.Where(pair => pair.Value))
+            foreach (string name in EasySpawnerPlugin.prefabNames)
             {
-                SearchItems.Add(pair.Key);
+                if (PrefabNamesSearched[name])
+                    SearchItems.Add(name);
             }
 
             PoolAllPrefabItems();
