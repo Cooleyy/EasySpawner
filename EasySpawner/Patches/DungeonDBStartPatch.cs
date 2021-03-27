@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using UnityEngine;
+using EasySpawner.UI;
 
 namespace EasySpawner.Patches
 {
@@ -24,6 +25,7 @@ namespace EasySpawner.Patches
                     foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
                     {
                         EasySpawnerPlugin.prefabNames.Add(prefab.name);
+                        EasySpawnerMenu.PrefabNamesSearched.Add(prefab.name, false);
                     }
 
                     EasySpawnerPlugin.prefabNames.Sort();
