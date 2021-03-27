@@ -133,7 +133,7 @@ namespace EasySpawner.UI
             int startIndex = Mathf.Max(0, Mathf.CeilToInt((scrollPos.y - 20) / 20));
             int maxItems = Mathf.CeilToInt((scrollRect.height + 40) / 20);
 
-            for (int i = startIndex; i < Mathf.Min(startIndex + maxItems, SearchItems.Count - 1); i++)
+            for (int i = startIndex; i < Mathf.Min(startIndex + maxItems, SearchItems.Count); i++)
             {
                 if (PrefabItems.Any(x => x.posIndex == i))
                     continue;
