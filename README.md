@@ -7,7 +7,7 @@ Use this mod to spawn in items or enemies (of any level!) or just experiment spa
 
 While in game press "/" or "Numpad /" to show/hide the menu. Hotkey can be changed in config.
 
-The main feature of the provided menu is a search field that when typed into updates a dropdown of prefabs that contain the search term (non case-sensitive).
+The main feature of the provided menu is a search field that when typed into updates a list of prefabs that contain the search term (non case-sensitive).
 The prefabs will contain all manner of gameobjects from items, enemies, world objects, fx, vfx, sfx and anything else in the game.
 Anything that can be provided a level such as equipable items and enemies can be spawned at any level up to 999,999,999.
 The mod is fully client-side and not required by anyone but the person who wants to use it, this can be used on any server.
@@ -18,13 +18,13 @@ Note: The prefab names may differ from the in game name. E.g. The 5th boss Yaglu
 
 ## Menu UI
 <html>
-<img src="https://john2143.com/f/oTub.png" width="450">
+<img src="https://john2143.com/f/AU2E.png" width="450">
 </html>
 
 Example. Entering "copper" will provide all prefabs with "copper" contained in the name, here it provide Copper bar, Copper ore, Copper knife and three variants of a copper vein.
 
 <html>
-<img src="https://john2143.com/f/cFY4.png" width="450">
+<img src="https://john2143.com/f/UrJq.png" width="450">
 </html>
 
 Clicking the spawn button, pressing "=" or "Numpad +" will create the selected prefab at the chosen player.
@@ -33,7 +33,7 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 
 * The menu UI can be dragged within the screen with the mouse.
 
-* The search field auto updates the prefab dropdown with every character entered
+* The search field auto updates the prefab list with every character entered
 
 * You can choose the player to spawn the prefab at. 
 *Note: you cannot place items into others inventory*
@@ -43,7 +43,7 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 * You can create Items/Npcs much higher level than the game normally permits. E.g. a level 999999999 Silver sword 
 
 <html>
-<img src="https://john2143.com/f/w2rG.png" width="450">
+<img src="https://john2143.com/f/J2gk.png" width="450">
 </html>
 
 * You can tick the "Put in inventory" toggle to immediately place the item in your inventory. 
@@ -52,10 +52,8 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 * You can go over the normal stack size limit by ticking the "Ignore stack size" toggle. E.g. a 999 stack of arrows
 
 <html>
-<img src="https://john2143.com/f/UYIf.png" width="450">
+<img src="https://john2143.com/f/lTiY.png" width="450">
 </html>
-
-* By default the dropdown only fills with up to 100 search results as large dropdowns can cause a bit of lag when opened, check the "Show > 100 search results" toggle to fill the dropdown with every result found. (Dropdown with every single prefab can lag the game for a few seconds)*
 
 * Spawn something you didnt mean to or didnt realise would be indestructible? You can undo it by pressing the Undo hotkey, defaults to left ctrl + z
 
@@ -74,6 +72,11 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 Some times the coroutine checking for changes in the player list is killed unexepectedly.
 
 ## Changelog
+
+#### 1.3.0
+
+* Changed prefab dropdown to a scrollView. Now all prefabs are shown in the list at all times, so removed the "show > 100 search results" toggle.
+* Prefabs from other mods are correctly sorted into the list.
 
 #### 1.2.0
 
