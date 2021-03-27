@@ -235,8 +235,11 @@ namespace EasySpawner.UI
 
         public void Destroy()
         {
+            PrefabScrollView.onValueChanged.RemoveAllListeners();
             SearchField.onValueChanged.RemoveAllListeners();
             SpawnButton.onClick.RemoveAllListeners();
+            PrefabItems = null;
+            PrefabItemPool = new Queue<PrefabItem>();
         }
     }
 }
