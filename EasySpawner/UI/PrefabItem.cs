@@ -13,5 +13,13 @@ namespace EasySpawner.UI
         public float originalHeight;
         public bool isSearched;
         public int posIndex = -1;
+
+        private Color starOnColor = new Color(1f, 200/255f, 41 / 255f);
+        private Color starOffColor = new Color(154/255f, 154/255f,154/255f);
+
+        private void Update()
+        {
+            favourite.targetGraphic.color = favourite.isOn ? starOnColor : starOffColor;
+        }
     }
 }
