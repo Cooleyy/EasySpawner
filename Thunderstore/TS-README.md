@@ -49,6 +49,8 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 
 * Spawn something you didnt mean to or didnt realise would be indestructible? You can undo it by pressing the Undo hotkey, defaults to left ctrl + z
 
+* You can select favourite items that will stay at the top of the list for easier access.
+
 ## Config
 
 In your BepInEx/Config there is a config file that can be used to change the hotkeys to open/close the menu, spawn items and undo. Be aware setting this to a letter will cause the menu to close if you type it in the search box!
@@ -60,6 +62,11 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll and Assetbundle file in your BepInEx plugins folder.
 
 ## Changelog
+
+#### 1.4.0
+
+* Adds ability to select favourite items that stay at the top of the list. These are saved on file to persist between sessions.
+* Player input is more thouroughly blocked during input to fields.
 
 #### 1.3.0
 

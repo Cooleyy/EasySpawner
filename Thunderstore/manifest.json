@@ -1,6 +1,6 @@
 {
     "name": "EasySpawner",
-    "version_number": "1.3.0",
+    "version_number": "1.4.0",
     "website_url": "https://github.com/Cooleyy/EasySpawner",
     "description": "Easy spawner provides a simple and easy to use UI for spawning any Valheim prefab inside the game. Use this mod to spawn in items or enemies (of any level!) or just experiment spawning any gameobject possible (includes fx, vfx, and sfx)",
     "dependencies": [

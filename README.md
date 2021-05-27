@@ -33,14 +33,14 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 
 * The menu UI can be dragged within the screen with the mouse.
 
-* The search field auto updates the prefab list with every character entered
+* The search field auto updates the prefab list with every character entered.
 
 * You can choose the player to spawn the prefab at. 
 *Note: you cannot place items into others inventory*
 
-* You can choose the amount and level of the item/object you want to spawn using the amount and level field
+* You can choose the amount and level of the item/object you want to spawn using the amount and level field.
 
-* You can create Items/Npcs much higher level than the game normally permits. E.g. a level 999999999 Silver sword 
+* You can create Items/Npcs much higher level than the game normally permits. E.g. a level 999999999 Silver sword.
 
 <html>
 <img src="https://john2143.com/f/J2gk.png" width="450">
@@ -49,13 +49,15 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 * You can tick the "Put in inventory" toggle to immediately place the item in your inventory. 
 *Note: this only works for item drops and only works on yourself, if you tick this and try on other players it will just spawn in front of them as normal*
 
-* You can go over the normal stack size limit by ticking the "Ignore stack size" toggle. E.g. a 999 stack of arrows
+* You can go over the normal stack size limit by ticking the "Ignore stack size" toggle. E.g. a 999 stack of arrows.
 
 <html>
 <img src="https://john2143.com/f/lTiY.png" width="450">
 </html>
 
-* Spawn something you didnt mean to or didnt realise would be indestructible? You can undo it by pressing the Undo hotkey, defaults to left ctrl + z
+* Spawn something you didnt mean to or didnt realise would be indestructible? You can undo it by pressing the Undo hotkey, defaults to left ctrl + z.
+
+* You can select favourite items that will stay at the top of the list for easier access.
 
 ## Config
 
@@ -72,6 +74,11 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 Some times the coroutine checking for changes in the player list is killed unexepectedly.
 
 ## Changelog
+
+#### 1.4.0
+
+* Adds ability to select favourite items that stay at the top of the list. These are saved on file to persist between sessions.
+* Player input is more thouroughly blocked during input to fields.
 
 #### 1.3.0
 
