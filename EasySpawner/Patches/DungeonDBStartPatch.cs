@@ -25,10 +25,11 @@ namespace EasySpawner.Patches
                     foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
                     {
                         EasySpawnerPlugin.prefabNames.Add(prefab.name);
-                        EasySpawnerMenu.PrefabNamesSearched.Add(prefab.name, false);
+                        EasySpawnerMenu.PrefabStates.Add(prefab.name, new PrefabState());
                     }
 
                     EasySpawnerPlugin.prefabNames.Sort();
+                    EasySpawnerPlugin.LoadFavourites();
                 }
             }
         }

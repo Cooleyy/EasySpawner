@@ -29,6 +29,7 @@ namespace EasySpawner
         public static Stack<List<GameObject>> spawnActions = new Stack<List<GameObject>>();
 
         public static readonly string assetBundleName = "EasySpawnerAssetBundle";
+        public const string favouritesFileName = "favouriteItems.txt";
 
         public Harmony harmony;
 
@@ -85,6 +86,53 @@ namespace EasySpawner
                 Debug.Log("Easy spawner: menu asset bundle loaded");
             else
                 Debug.Log("Easy spawner: menu asset bundle failed to load");
+        }
+
+        /// <summary>
+        /// Load favourite prefabs from file, into PrefabState dictionary
+        /// </summary>
+        public static void LoadFavourites()
+        {
+            Debug.Log("Easy spawner: load favourite Items from file");
+            Assembly assembly = typeof(EasySpawnerPlugin).Assembly;
+            string pathToFile = Path.Combine(Paths.PluginPath, Path.GetDirectoryName(assembly.Location), favouritesFileName);
+            if (!File.Exists(pathToFile)) return;
+
+            using (StreamReader file = File.OpenText(pathToFile))
+            {
+                while (!file.EndOfStream)
+                {
+                    string prefabName = file.ReadLine();
+
+                    if (prefabName == null || !EasySpawnerMenu.PrefabStates.ContainsKey(prefabName))
+                    {
+                        Debug.Log("Easy spawner: favourite prefab '"+ prefabName + "' not found");
+                        continue;
+                    }
+
+                    EasySpawnerMenu.PrefabStates[prefabName].isFavourite = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Saves favourite prefabs to file, from PrefabState dictionary
+        /// </summary>
+        public static void SaveFavourites()
+        {
+            Debug.Log("Easy spawner: save favourite Items to file");
+            Assembly assembly = typeof(EasySpawnerPlugin).Assembly;
+            string pathToFile = Path.Combine(Paths.PluginPath, Path.GetDirectoryName(assembly.Location), favouritesFileName);
+
+            using (StreamWriter file = File.CreateText(pathToFile))
+            {
+                foreach (KeyValuePair<string, PrefabState> pair in EasySpawnerMenu.PrefabStates)
+                {
+                    if(!pair.Value.isFavourite) continue;
+
+                    file.WriteLine(pair.Key);
+                }
+            }
         }
 
         private void CreateMenu()

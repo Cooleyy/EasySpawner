@@ -7,6 +7,9 @@
 Libs/
 EasySpawnerUnityProject/[Ll]ibrary/
 EasySpawnerUnityProject/[Aa]ssets/[Aa]ssetbundles
+EasySpawnerUnityProject/[Aa]ssets/Plugins/Editor/JetBrains*
+EasySpawnerUnityProject/[Aa]ssets/Plugins.meta
+EasySpawnerUnityProject/[Tt]emp/
 
 # User-specific files
 *.rsuser

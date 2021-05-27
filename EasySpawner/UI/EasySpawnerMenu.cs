@@ -16,6 +16,7 @@ namespace EasySpawner.UI
         public InputField LevelField;
         public Toggle PutInInventoryToggle;
         public Toggle IgnoreStackSizeToggle;
+        public Toggle FavouritesOnlyToggle;
         public Button SpawnButton;
         public Text SpawnText;
         public Text UndoText;
@@ -24,7 +25,7 @@ namespace EasySpawner.UI
         public PrefabItem[] PrefabItems;
         public Queue<PrefabItem> PrefabItemPool = new Queue<PrefabItem>();
         public string SelectedPrefabName;
-        public static Dictionary<string, bool> PrefabNamesSearched = new Dictionary<string, bool>();
+        public static Dictionary<string, PrefabState> PrefabStates = new Dictionary<string, PrefabState>();
         public List<string> SearchItems = new List<string>();
 
         public void CreateMenu(GameObject menuGameObject)
@@ -40,6 +41,8 @@ namespace EasySpawner.UI
 
             PutInInventoryToggle = menuGameObject.transform.Find("PutInInventoryToggle").GetComponent<Toggle>();
             IgnoreStackSizeToggle = menuGameObject.transform.Find("IgnoreStackSizeToggle").GetComponent<Toggle>();
+            FavouritesOnlyToggle = menuGameObject.transform.Find("FavouritesOnlyToggle").GetComponent<Toggle>();
+            FavouritesOnlyToggle.onValueChanged.AddListener(delegate { RebuildPrefabDropdown(); });
 
             SpawnButton = menuGameObject.transform.Find("SpawnButton").GetComponent<Button>();
             SpawnButton.onClick.AddListener(SpawnButtonPress);
@@ -76,6 +79,7 @@ namespace EasySpawner.UI
             template.rectTransform = template.GetComponent<RectTransform>();
             template.toggle = template.GetComponent<Toggle>();
             template.label = template.transform.Find("ItemLabel").GetComponent<Text>();
+            template.favourite = template.transform.Find("Star").GetComponent<Toggle>();
             template.originalHeight = template.rectTransform.rect.height;
             template.gameObject.SetActive(false);
 
@@ -85,6 +89,8 @@ namespace EasySpawner.UI
                 PrefabItem item = option.GetComponent<PrefabItem>();
                 item.toggle.isOn = false;
                 item.toggle.onValueChanged.AddListener(delegate { SelectPrefab(item); });
+                item.favourite.isOn = false;
+                item.favourite.onValueChanged.AddListener(delegate(bool on) { FavouritePrefab(on, item);  });
                 PrefabItemPool.Enqueue(item);
                 PrefabItems[i] = item;
             }
@@ -98,6 +104,7 @@ namespace EasySpawner.UI
             item.gameObject.SetActive(false);
             item.posIndex = -1;
             item.toggle.SetIsOnWithoutNotify(false);
+            item.favourite.SetIsOnWithoutNotify(false);
             PrefabItemPool.Enqueue(item);
         }
 
@@ -145,6 +152,7 @@ namespace EasySpawner.UI
                     item.posIndex = i;
                     item.label.text = SearchItems[i];
                     item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.label.text);
+                    item.favourite.SetIsOnWithoutNotify(PrefabStates[item.label.text].isFavourite);
                     item.gameObject.SetActive(true);
                 }
             }
@@ -159,6 +167,15 @@ namespace EasySpawner.UI
             }
 
             SelectedPrefabName = caller != null ? caller.label.text : null;
+        }
+
+        private void FavouritePrefab(bool favourite, PrefabItem caller)
+        {
+            string name = caller.label.text;
+            PrefabStates[name].isFavourite = favourite;
+
+            EasySpawnerPlugin.SaveFavourites();
+            RebuildPrefabDropdown();
         }
 
         public void RebuildPlayerDropdown()
@@ -221,13 +238,26 @@ namespace EasySpawner.UI
             Parallel.ForEach(EasySpawnerPlugin.prefabNames, name =>
             {
                 bool isSearched = name.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0;
-                PrefabNamesSearched[name] = isSearched;
+                PrefabStates[name].isSearched = isSearched;
             });
 
+            // Add favourite items to the list
             foreach (string name in EasySpawnerPlugin.prefabNames)
             {
-                if (PrefabNamesSearched[name])
+                PrefabState prefabState = PrefabStates[name];
+                if (prefabState.isSearched && prefabState.isFavourite)
                     SearchItems.Add(name);
+            }
+
+            // Add non favourite items to the list
+            if (!FavouritesOnlyToggle.isOn)
+            {
+                foreach (string name in EasySpawnerPlugin.prefabNames)
+                {
+                    PrefabState prefabState = PrefabStates[name];
+                    if (prefabState.isSearched && !prefabState.isFavourite)
+                        SearchItems.Add(name);
+                }
             }
 
             PoolAllPrefabItems();
