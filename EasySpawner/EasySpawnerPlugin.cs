@@ -12,7 +12,7 @@ using EasySpawner.Config;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.4.0")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.4.1")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {
@@ -29,7 +29,7 @@ namespace EasySpawner
         //List of each set of gameobjects spawned. Each list correlates to a spawn action
         public static Stack<List<GameObject>> spawnActions = new Stack<List<GameObject>>();
 
-        public static readonly string assetBundleName = "EasySpawnerAssetBundle";
+        public const string assetBundleName = "EasySpawnerAssetBundle";
         public const string favouritesFileName = "favouriteItems.txt";
 
         public Harmony harmony;
