@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine;
@@ -70,6 +71,16 @@ namespace EasySpawner
             }
         }
 
+        public static AssetBundle GetAssetBundleFromResources(string fileName)
+        {
+            Assembly execAssembly = Assembly.GetExecutingAssembly();
+            string resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(fileName));
+            using (Stream stream = execAssembly.GetManifestResourceStream(resourceName))
+            {
+                return AssetBundle.LoadFromStream(stream);
+            }
+        }
+
         public static void LoadAsset(string assetFileName)
         {
             if (menuAssetBundle)
@@ -78,9 +89,7 @@ namespace EasySpawner
                 return;
             }
 
-            Assembly assem = typeof(EasySpawnerPlugin).Assembly;
-            string pathToAsset = Path.Combine(Paths.PluginPath, Path.GetDirectoryName(assem.Location), assetFileName);
-            menuAssetBundle = AssetBundle.LoadFromFile(pathToAsset);
+            menuAssetBundle = GetAssetBundleFromResources(assetFileName);
 
             if (menuAssetBundle)
                 Debug.Log("Easy spawner: menu asset bundle loaded");
