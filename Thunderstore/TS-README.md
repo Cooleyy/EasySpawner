@@ -59,9 +59,13 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 
 1. [Install BepInEx for Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
 
-2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll and Assetbundle file in your BepInEx plugins folder.
+2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll in a folder called "EasySpawner" in your BepInEx plugins folder.
 
 ## Changelog
+
+#### 1.4.1
+
+* Asset bundle for UI is now contained within main .dll
 
 #### 1.4.0
 
