@@ -75,6 +75,10 @@ Some times the coroutine checking for changes in the player list is killed unexe
 
 ## Changelog
 
+#### 1.4.2
+
+* Favourite items now stored in same location as config file.
+
 #### 1.4.1
 
 * Asset bundle for UI is now contained within main .dll
