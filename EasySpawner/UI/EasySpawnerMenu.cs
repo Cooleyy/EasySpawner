@@ -83,7 +83,7 @@ namespace EasySpawner.UI
                 GameObject option = UnityEngine.Object.Instantiate(template.gameObject, PrefabScrollView.content);
                 PrefabItem item = option.GetComponent<PrefabItem>();
                 item.Init(SelectPrefab, FavouritePrefab);
-                PrefabItemPool.Enqueue(item);
+                PoolPrefabItem(item);
                 PrefabItems[i] = item;
             }
 
@@ -93,10 +93,7 @@ namespace EasySpawner.UI
 
         public void PoolPrefabItem(PrefabItem item)
         {
-            item.gameObject.SetActive(false);
-            item.posIndex = -1;
-            item.toggle.SetIsOnWithoutNotify(false);
-            item.SetFavouriteOn(false, true);
+            item.Pool();
             PrefabItemPool.Enqueue(item);
         }
 

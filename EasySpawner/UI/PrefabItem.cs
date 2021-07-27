@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,14 @@ namespace EasySpawner.UI
                 favourite.isOn = on;
 
             favourite.targetGraphic.color = on ? starOnColor : starOffColor;
+        }
+
+        public void Pool()
+        {
+            gameObject.SetActive(false);
+            posIndex = -1;
+            toggle.SetIsOnWithoutNotify(false);
+            SetFavouriteOn(false, true);
         }
     }
 }
