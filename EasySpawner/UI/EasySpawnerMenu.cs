@@ -89,7 +89,7 @@ namespace EasySpawner.UI
                 PrefabItem item = option.GetComponent<PrefabItem>();
                 item.toggle.isOn = false;
                 item.toggle.onValueChanged.AddListener(delegate { SelectPrefab(item); });
-                item.favourite.isOn = false;
+                item.SetFavouriteOn(false, false);
                 item.favourite.onValueChanged.AddListener(delegate(bool on) { FavouritePrefab(on, item);  });
                 PrefabItemPool.Enqueue(item);
                 PrefabItems[i] = item;
@@ -104,7 +104,7 @@ namespace EasySpawner.UI
             item.gameObject.SetActive(false);
             item.posIndex = -1;
             item.toggle.SetIsOnWithoutNotify(false);
-            item.favourite.SetIsOnWithoutNotify(false);
+            item.SetFavouriteOn(false, true);
             PrefabItemPool.Enqueue(item);
         }
 
@@ -152,7 +152,7 @@ namespace EasySpawner.UI
                     item.posIndex = i;
                     item.label.text = SearchItems[i];
                     item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.label.text);
-                    item.favourite.SetIsOnWithoutNotify(PrefabStates[item.label.text].isFavourite);
+                    item.SetFavouriteOn(PrefabStates[item.label.text].isFavourite, true);
                     item.gameObject.SetActive(true);
                 }
             }

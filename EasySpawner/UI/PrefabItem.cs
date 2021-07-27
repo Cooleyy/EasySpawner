@@ -14,12 +14,17 @@ namespace EasySpawner.UI
         public bool isSearched;
         public int posIndex = -1;
 
-        private Color starOnColor = new Color(1f, 200/255f, 41 / 255f);
-        private Color starOffColor = new Color(154/255f, 154/255f,154/255f);
+        private Color starOnColor = new Color(1f, 200f / 255f, 41f / 255f);
+        private Color starOffColor = new Color(154f / 255f, 154f / 255f, 154f / 255f);
 
-        private void Update()
+        public void SetFavouriteOn(bool on, bool silent)
         {
-            favourite.targetGraphic.color = favourite.isOn ? starOnColor : starOffColor;
+            if (silent)
+                favourite.SetIsOnWithoutNotify(on);
+            else
+                favourite.isOn = on;
+
+            favourite.targetGraphic.color = on ? starOnColor : starOffColor;
         }
     }
 }
