@@ -76,21 +76,13 @@ namespace EasySpawner.UI
             //Create prefab dropdown pool
             PrefabItems = new PrefabItem[20];
             PrefabItem template = PrefabScrollView.content.GetChild(0).gameObject.AddComponent<PrefabItem>();
-            template.rectTransform = template.GetComponent<RectTransform>();
-            template.toggle = template.GetComponent<Toggle>();
-            template.label = template.transform.Find("ItemLabel").GetComponent<Text>();
-            template.favourite = template.transform.Find("Star").GetComponent<Toggle>();
-            template.originalHeight = template.rectTransform.rect.height;
-            template.gameObject.SetActive(false);
+            template.SetupTemplate(template.transform);
 
             for (int i = 0; i < 20; i++)
             {
                 GameObject option = UnityEngine.Object.Instantiate(template.gameObject, PrefabScrollView.content);
                 PrefabItem item = option.GetComponent<PrefabItem>();
-                item.toggle.isOn = false;
-                item.toggle.onValueChanged.AddListener(delegate { SelectPrefab(item); });
-                item.SetFavouriteOn(false, false);
-                item.favourite.onValueChanged.AddListener(delegate(bool on) { FavouritePrefab(on, item);  });
+                item.Init(SelectPrefab, FavouritePrefab);
                 PrefabItemPool.Enqueue(item);
                 PrefabItems[i] = item;
             }
