@@ -186,6 +186,7 @@ namespace EasySpawner
             playerNames = GetPlayerNames();
 
             menu.CreateMenu(menuGameObject);
+            Style.ApplyAll(menuGameObject, menu);
 
             //Attach CheckForNewPlayersCoroutine to UIElementdragger on the menu Gameobject so if it gets destroyed it also stops the coroutine
             menuGameObject.GetComponent<UIElementDragger>().StartCoroutine(CheckForNewPlayersCoroutine());

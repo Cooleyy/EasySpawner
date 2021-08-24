@@ -41,6 +41,7 @@
     <Compile Include="UI\EasySpawnerMenu.cs" />
     <Compile Include="UI\PrefabItem.cs" />
     <Compile Include="UI\PrefabState.cs" />
+    <Compile Include="UI\Style.cs" />
     <Compile Include="UI\UIElementDragger.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +89,10 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>D:\SteamLibrary\steamapps\common\Valheim\valheim_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
