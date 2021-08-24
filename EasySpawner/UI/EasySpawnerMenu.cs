@@ -76,7 +76,7 @@ namespace EasySpawner.UI
             //Create prefab dropdown pool
             PrefabItems = new PrefabItem[20];
             PrefabItem template = PrefabScrollView.content.GetChild(0).gameObject.AddComponent<PrefabItem>();
-            template.SetupTemplate(template.transform);
+            template.gameObject.SetActive(false);
 
             for (int i = 0; i < 20; i++)
             {

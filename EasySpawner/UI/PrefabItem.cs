@@ -17,17 +17,13 @@ namespace EasySpawner.UI
         private Color starOnColor = new Color(1f, 200f / 255f, 41f / 255f);
         private Color starOffColor = new Color(154f / 255f, 154f / 255f, 154f / 255f);
 
-        public void SetupTemplate(Transform template)
-        {
-            rectTransform = template.GetComponent<RectTransform>();
-            toggle = template.GetComponent<Toggle>();
-            label = template.transform.Find("ItemLabel").GetComponent<Text>();
-            favourite = template.transform.Find("Star").GetComponent<Toggle>();
-            template.gameObject.SetActive(false);
-        }
-
         public void Init(Action<PrefabItem> selectPrefabCall, Action<bool, PrefabItem> favouritePrefabCall)
         {
+            rectTransform = GetComponent<RectTransform>();
+            toggle = GetComponent<Toggle>();
+            label = transform.Find("ItemLabel").GetComponent<Text>();
+            favourite = transform.Find("Star").GetComponent<Toggle>();
+
             toggle.isOn = false;
             toggle.onValueChanged.AddListener(delegate { selectPrefabCall(this); });
             SetFavouriteOn(false, false);
