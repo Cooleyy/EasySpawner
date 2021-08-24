@@ -2,12 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EasySpawner.UI {
-    public static class Style {
+namespace EasySpawner.UI
+{
+    public static class Style
+    {
         private static Font averiaSerif;
         private static Font averiaSerifBold;
 
-        public static void ApplyAll(GameObject root, EasySpawnerMenu menu) {
+        public static void ApplyAll(GameObject root, EasySpawnerMenu menu)
+        {
             FindFonds();
             ApplyPanel(root.GetComponent<Image>());
 
@@ -30,11 +33,13 @@ namespace EasySpawner.UI {
                 ApplyDropdown(dropdown);
         }
 
-        public static void ApplyPanel(Image image) {
+        public static void ApplyPanel(Image image)
+        {
             image.sprite = GetSprite("woodpanel_settings");
         }
 
-        public static void ApplyText(Text text, Color color) {
+        public static void ApplyText(Text text, Color color)
+        {
             if (text.fontStyle == FontStyle.Bold)
             {
                 text.font = averiaSerifBold;
@@ -48,15 +53,18 @@ namespace EasySpawner.UI {
             text.color = color;
         }
 
-        public static void ApplyInputField(InputField inputField) {
+        public static void ApplyInputField(InputField inputField)
+        {
             inputField.GetComponent<Image>().sprite = GetSprite("text_field");
         }
 
-        public static void ApplyButton(Button button) {
+        public static void ApplyButton(Button button)
+        {
             button.GetComponent<Image>().sprite = GetSprite("button");
         }
 
-        public static void ApplyToogle(Toggle toggle) {
+        public static void ApplyToogle(Toggle toggle)
+        {
             switch (toggle.gameObject.name)
             {
                 case "_Template":
@@ -83,7 +91,8 @@ namespace EasySpawner.UI {
             }
         }
 
-        public static void ApplyScrollRect(ScrollRect scrollRect) {
+        public static void ApplyScrollRect(ScrollRect scrollRect)
+        {
             scrollRect.GetComponent<Image>().sprite = GetSprite("item_background_sunken");
 
             if ((bool)scrollRect.horizontalScrollbar)
@@ -107,16 +116,19 @@ namespace EasySpawner.UI {
             }
         }
 
-        public static void ApplyDropdown(Dropdown dropdown) {
+        public static void ApplyDropdown(Dropdown dropdown)
+        {
             ((Image)dropdown.targetGraphic).sprite = GetSprite("button");
             ApplyScrollRect(dropdown.template.GetComponent<ScrollRect>());
         }
 
-        public static Sprite GetSprite(string name) {
+        public static Sprite GetSprite(string name)
+        {
             return Resources.FindObjectsOfTypeAll<Sprite>().FirstOrDefault(x => x.name == name);
         }
 
-        private static void FindFonds() {
+        private static void FindFonds()
+        {
             Font[] fonts = Resources.FindObjectsOfTypeAll<Font>();
             averiaSerif = fonts.FirstOrDefault(x => x.name == "AveriaSerifLibre-Regular");
             averiaSerifBold = fonts.FirstOrDefault(x => x.name == "AveriaSerifLibre-Bold");
