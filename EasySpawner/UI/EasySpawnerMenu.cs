@@ -139,9 +139,9 @@ namespace EasySpawner.UI
                     PrefabItem item = PrefabItemPool.Dequeue();
                     item.rectTransform.anchoredPosition = new Vector2(0, -i * 20 - 10f);
                     item.posIndex = i;
-                    item.label.text = SearchItems[i];
-                    item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.label.text);
-                    item.SetFavouriteOn(PrefabStates[item.label.text].isFavourite, true);
+                    item.SetName(SearchItems[i]);
+                    item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.GetName());
+                    item.SetFavouriteOn(PrefabStates[item.GetName()].isFavourite, true);
                     item.gameObject.SetActive(true);
                 }
             }
@@ -155,12 +155,12 @@ namespace EasySpawner.UI
                 prefabItem.toggle.SetIsOnWithoutNotify(prefabItem == caller);
             }
 
-            SelectedPrefabName = caller != null ? caller.label.text : null;
+            SelectedPrefabName = caller != null ? caller.GetName() : null;
         }
 
         private void FavouritePrefab(bool favourite, PrefabItem caller)
         {
-            string name = caller.label.text;
+            string name = caller.GetName();
             PrefabStates[name].isFavourite = favourite;
 
             EasySpawnerPlugin.SaveFavourites();
@@ -227,6 +227,8 @@ namespace EasySpawner.UI
             Parallel.ForEach(EasySpawnerPlugin.prefabNames, name =>
             {
                 bool isSearched = name.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0;
+                string localizedName = PrefabStates[name].localizedName;
+                isSearched = isSearched || localizedName.Length > 0 && localizedName.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0;
                 PrefabStates[name].isSearched = isSearched;
             });
 

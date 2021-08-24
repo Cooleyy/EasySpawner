@@ -9,10 +9,11 @@ namespace EasySpawner.UI
     {
         public RectTransform rectTransform;
         public Toggle toggle;
-        public Text label;
         public int posIndex = -1;
 
+        private Text label;
         private Toggle favourite;
+        private string itemName;
 
         private Color starOnColor = new Color(1f, 200f / 255f, 41f / 255f);
         private Color starOffColor = new Color(154f / 255f, 154f / 255f, 154f / 255f);
@@ -46,6 +47,18 @@ namespace EasySpawner.UI
             posIndex = -1;
             toggle.SetIsOnWithoutNotify(false);
             SetFavouriteOn(false, true);
+        }
+
+        public void SetName(string itemName)
+        {
+            this.itemName = itemName;
+            string localizedName = EasySpawnerMenu.PrefabStates[itemName].localizedName;
+            label.text = localizedName.Length > 0 ? localizedName : itemName;
+        }
+
+        public string GetName()
+        {
+            return itemName;
         }
     }
 }

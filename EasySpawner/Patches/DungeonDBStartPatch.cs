@@ -24,8 +24,16 @@ namespace EasySpawner.Patches
                 {
                     foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
                     {
+                        string localizedName = "";
+
+                        if (prefab.TryGetComponent(out ItemDrop itemDrop))
+                            localizedName = Localization.instance.Localize(itemDrop.m_itemData.m_shared.m_name);
+
+                        if (prefab.TryGetComponent(out Piece piece))
+                            localizedName = Localization.instance.Localize(piece.m_name);
+
                         EasySpawnerPlugin.prefabNames.Add(prefab.name);
-                        EasySpawnerMenu.PrefabStates.Add(prefab.name, new PrefabState());
+                        EasySpawnerMenu.PrefabStates.Add(prefab.name, new PrefabState() { localizedName = localizedName });
                     }
 
                     EasySpawnerPlugin.prefabNames.Sort();
