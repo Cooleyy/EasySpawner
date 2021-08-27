@@ -116,6 +116,9 @@
  <Reference Include="UnityEngine.XR.LegacyInputHelpers">
  <HintPath>D:/Dokumente/CodeProjects/EasySpawner/EasySpawnerUnityProject/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.AssetBundleBrowser.Editor">
+ <HintPath>D:/Dokumente/CodeProjects/EasySpawner/EasySpawnerUnityProject/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>D:/Dokumente/CodeProjects/EasySpawner/EasySpawnerUnityProject/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
@@ -151,9 +154,6 @@
  </Reference>
  <Reference Include="com.unity.multiplayer-hlapi.Runtime">
  <HintPath>D:/Dokumente/CodeProjects/EasySpawner/EasySpawnerUnityProject/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.AssetBundleBrowser.Editor">
- <HintPath>D:/Dokumente/CodeProjects/EasySpawner/EasySpawnerUnityProject/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Programme/Unity-Versions/2019.4.24f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

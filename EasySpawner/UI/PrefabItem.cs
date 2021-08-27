@@ -53,7 +53,7 @@ namespace EasySpawner.UI
         {
             this.itemName = itemName;
             string localizedName = EasySpawnerMenu.PrefabStates[itemName].localizedName;
-            label.text = localizedName.Length > 0 ? localizedName : itemName;
+            label.text = localizedName.Length > 0 ? $"{localizedName} ({itemName})" : itemName;
         }
 
         public string GetName()
