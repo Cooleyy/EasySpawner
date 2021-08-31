@@ -63,6 +63,10 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 
 ## Changelog
 
+#### 1.5.0
+
+* Massive UI overhaul, now follows Valhiem UI styling
+
 #### 1.4.2
 
 * Favourite items now stored in same location as config file.

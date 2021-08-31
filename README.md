@@ -92,6 +92,10 @@ If you use r2modman you can set the path too, but this is optional.
 
 ## Changelog
 
+#### 1.5.0
+
+* Massive UI overhaul, now follows Valhiem UI styling
+
 #### 1.4.2
 
 * Favourite items now stored in same location as config file.
