@@ -10,6 +10,7 @@ EasySpawnerUnityProject/[Aa]ssets/[Aa]ssetbundles
 EasySpawnerUnityProject/[Aa]ssets/Plugins/Editor/JetBrains*
 EasySpawnerUnityProject/[Aa]ssets/Plugins.meta
 EasySpawnerUnityProject/[Tt]emp/
+Environment.props
 
 # User-specific files
 *.rsuser

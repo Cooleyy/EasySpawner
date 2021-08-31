@@ -76,22 +76,14 @@ namespace EasySpawner.UI
             //Create prefab dropdown pool
             PrefabItems = new PrefabItem[20];
             PrefabItem template = PrefabScrollView.content.GetChild(0).gameObject.AddComponent<PrefabItem>();
-            template.rectTransform = template.GetComponent<RectTransform>();
-            template.toggle = template.GetComponent<Toggle>();
-            template.label = template.transform.Find("ItemLabel").GetComponent<Text>();
-            template.favourite = template.transform.Find("Star").GetComponent<Toggle>();
-            template.originalHeight = template.rectTransform.rect.height;
             template.gameObject.SetActive(false);
 
             for (int i = 0; i < 20; i++)
             {
                 GameObject option = UnityEngine.Object.Instantiate(template.gameObject, PrefabScrollView.content);
                 PrefabItem item = option.GetComponent<PrefabItem>();
-                item.toggle.isOn = false;
-                item.toggle.onValueChanged.AddListener(delegate { SelectPrefab(item); });
-                item.favourite.isOn = false;
-                item.favourite.onValueChanged.AddListener(delegate(bool on) { FavouritePrefab(on, item);  });
-                PrefabItemPool.Enqueue(item);
+                item.Init(SelectPrefab, FavouritePrefab);
+                PoolPrefabItem(item);
                 PrefabItems[i] = item;
             }
 
@@ -101,10 +93,7 @@ namespace EasySpawner.UI
 
         public void PoolPrefabItem(PrefabItem item)
         {
-            item.gameObject.SetActive(false);
-            item.posIndex = -1;
-            item.toggle.SetIsOnWithoutNotify(false);
-            item.favourite.SetIsOnWithoutNotify(false);
+            item.Pool();
             PrefabItemPool.Enqueue(item);
         }
 
@@ -150,9 +139,9 @@ namespace EasySpawner.UI
                     PrefabItem item = PrefabItemPool.Dequeue();
                     item.rectTransform.anchoredPosition = new Vector2(0, -i * 20 - 10f);
                     item.posIndex = i;
-                    item.label.text = SearchItems[i];
-                    item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.label.text);
-                    item.favourite.SetIsOnWithoutNotify(PrefabStates[item.label.text].isFavourite);
+                    item.SetName(SearchItems[i]);
+                    item.toggle.SetIsOnWithoutNotify(SelectedPrefabName == item.GetName());
+                    item.SetFavouriteOn(PrefabStates[item.GetName()].isFavourite, true);
                     item.gameObject.SetActive(true);
                 }
             }
@@ -166,12 +155,12 @@ namespace EasySpawner.UI
                 prefabItem.toggle.SetIsOnWithoutNotify(prefabItem == caller);
             }
 
-            SelectedPrefabName = caller != null ? caller.label.text : null;
+            SelectedPrefabName = caller != null ? caller.GetName() : null;
         }
 
         private void FavouritePrefab(bool favourite, PrefabItem caller)
         {
-            string name = caller.label.text;
+            string name = caller.GetName();
             PrefabStates[name].isFavourite = favourite;
 
             EasySpawnerPlugin.SaveFavourites();
@@ -238,6 +227,8 @@ namespace EasySpawner.UI
             Parallel.ForEach(EasySpawnerPlugin.prefabNames, name =>
             {
                 bool isSearched = name.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0;
+                string localizedName = PrefabStates[name].localizedName;
+                isSearched = isSearched || localizedName.Length > 0 && localizedName.IndexOf(SearchField.text, StringComparison.OrdinalIgnoreCase) >= 0;
                 PrefabStates[name].isSearched = isSearched;
             });
 

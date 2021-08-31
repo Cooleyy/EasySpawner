@@ -4,5 +4,6 @@
     {
         public bool isSearched;
         public bool isFavourite;
+        public string localizedName;
     }
 }

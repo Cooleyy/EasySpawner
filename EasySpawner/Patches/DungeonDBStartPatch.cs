@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using UnityEngine;
 using EasySpawner.UI;
 
@@ -24,14 +25,33 @@ namespace EasySpawner.Patches
                 {
                     foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
                     {
+                        string localizedName = "";
+
+                        if (prefab.TryGetComponent(out ItemDrop itemDrop))
+                            localizedName = Localization.instance.Localize(itemDrop.m_itemData.m_shared.m_name).Trim();
+
+                        if (prefab.TryGetComponent(out Piece piece))
+                            localizedName = Localization.instance.Localize(piece.m_name).Trim();
+
                         EasySpawnerPlugin.prefabNames.Add(prefab.name);
-                        EasySpawnerMenu.PrefabStates.Add(prefab.name, new PrefabState());
+                        EasySpawnerMenu.PrefabStates.Add(prefab.name, new PrefabState() { localizedName = localizedName });
                     }
 
-                    EasySpawnerPlugin.prefabNames.Sort();
+                    EasySpawnerPlugin.prefabNames.Sort(NameComparator);
                     EasySpawnerPlugin.LoadFavourites();
                 }
             }
+        }
+
+        private static string GetPrimaryName(string key)
+        {
+            string localized = EasySpawnerMenu.PrefabStates[key].localizedName;
+            return localized.Length > 0 ? localized : key;
+        }
+
+        private static int NameComparator(string a, string b)
+        {
+            return string.Compare(GetPrimaryName(a), GetPrimaryName(b), StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
