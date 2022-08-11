@@ -69,6 +69,9 @@ namespace EasySpawner.UI
             else
                 CloseText.text = "Open: " + config.FirstOpenHotkey.Value;
 
+            UpdateMenuSize();
+            config.UIWidth.SettingChanged += (sender, e) => UpdateMenuSize();
+
             //Initial player dropdown
             PlayerDropdown.ClearOptions();
             RebuildPlayerDropdown();
@@ -89,6 +92,12 @@ namespace EasySpawner.UI
 
             PrefabScrollView.onValueChanged.AddListener(UpdateItemPrefabPool);
             RebuildPrefabDropdown();
+        }
+
+        private void UpdateMenuSize()
+        {
+            RectTransform menuRect = (RectTransform) EasySpawnerPlugin.menuGameObject.transform;
+            menuRect.sizeDelta = new Vector2(EasySpawnerPlugin.config.UIWidth.Value, menuRect.sizeDelta.y);
         }
 
         public void PoolPrefabItem(PrefabItem item)
