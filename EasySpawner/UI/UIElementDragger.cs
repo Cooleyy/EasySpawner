@@ -5,48 +5,34 @@ namespace EasySpawner.UI
 {
 	public class UIElementDragger : MonoBehaviour, IDragHandler, IBeginDragHandler
 	{
-		private Vector2 lastMousePosition;
+		private RectTransform window;
+		private Vector2 delta;
+
+		private void Awake()
+		{
+			window = (RectTransform)transform;
+		}
 
 		public void OnBeginDrag(PointerEventData eventData)
 		{
-			lastMousePosition = eventData.position;
+			delta = Input.mousePosition - window.position;
 		}
 
 		public void OnDrag(PointerEventData eventData)
 		{
-			Vector2 currentMousePosition = eventData.position;
-			Vector2 diff = currentMousePosition - lastMousePosition;
-			RectTransform rect = GetComponent<RectTransform>();
+			Vector2 pos = eventData.position - delta;
+			Rect rect = window.rect;
+			Vector2 lossyScale = window.lossyScale;
 
-			Vector3 newPosition = rect.position + new Vector3(diff.x, diff.y, transform.position.z);
-			Vector3 oldPos = rect.position;
-			rect.position = newPosition;
-			if (!IsRectTransformInsideSreen(rect))
-			{
-				rect.position = oldPos;
-			}
-			lastMousePosition = currentMousePosition;
-		}
+			float minX = rect.width / 2f * lossyScale.x;
+			float maxX = Screen.width - minX;
+			float minY = rect.height / 2f * lossyScale.y;
+			float maxY = Screen.height - minY;
 
-		private bool IsRectTransformInsideSreen(RectTransform rectTransform)
-		{
-			bool isInside = false;
-			Vector3[] corners = new Vector3[4];
-			rectTransform.GetWorldCorners(corners);
-			int visibleCorners = 0;
-			Rect rect = new Rect(0, 0, Screen.width, Screen.height);
-			foreach (Vector3 corner in corners)
-			{
-				if (rect.Contains(corner))
-				{
-					visibleCorners++;
-				}
-			}
-			if (visibleCorners == 4)
-			{
-				isInside = true;
-			}
-			return isInside;
+			pos.x = Mathf.Clamp(pos.x, minX, maxX);
+			pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+			transform.position = pos;
 		}
 	}
 }
