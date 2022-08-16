@@ -15,6 +15,7 @@ namespace EasySpawner.Config
         public ConfigEntry<string> SecondSpawnHotkey;
         public ConfigEntry<string> UndoHotkey;
         public ConfigEntry<string> UndoHotkeyModifier;
+        public ConfigEntry<float> UIWidth;
 
         public bool OpenHotkeyModifierSet;
         public bool SpawnHotkeyModifierSet;
@@ -32,6 +33,8 @@ namespace EasySpawner.Config
 
             UndoHotkey = ConfigFile.Bind("Hotkeys", "UndoHotkey", "z", "Hotkey to Undo last spawn");
             UndoHotkeyModifier = ConfigFile.Bind("Hotkeys", "UndoHotkeyModifier", "left ctrl", "Modifier to Undo hotkey");
+
+            UIWidth = ConfigFile.Bind("UI", "MenuWidth", 450f, "Width of the menu");
 
             FirstOpenHotkey.Value = FirstOpenHotkey.Value.ToLower();
             FirstOpenHotkeyModifier.Value = FirstOpenHotkeyModifier.Value.ToLower();
