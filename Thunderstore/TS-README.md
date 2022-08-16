@@ -17,11 +17,11 @@ Note: The prefab names may differ from the in game name. E.g. The 5th boss Yaglu
 *Warning: This mod can massively affect your character and world. Do not use this on a server where you are not given permission by others on it!* 
 
 ## Menu UI
-![Menu UI](https://john2143.com/f/AU2E.png)
+![Menu UI](https://john2143.com/f/HTnw.png)
 
 Example. Entering "copper" will provide all prefabs with "copper" contained in the name, here it provide Copper bar, Copper ore, Copper knife and three variants of a copper vein.
 
-![Copper example](https://john2143.com/f/UrJq.png)
+![Copper example](https://john2143.com/f/wDpg.png)
 
 Clicking the spawn button, pressing "=" or "Numpad +" will create the selected prefab at the chosen player.
 
@@ -38,14 +38,14 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 
 * You can create Items/Npcs much higher level than the game normally permits. E.g. a level 999999999 Silver sword 
 
-![High level silver sword example](https://john2143.com/f/J2gk.png)
+![High level silver sword example](https://john2143.com/f/7BAE.png)
 
 * You can tick the "Put in inventory" toggle to immediately place the item in your inventory. 
 *Note: this only works for item drops and only works on yourself, if you tick this and try on other players it will just spawn in front of them as normal*
 
 * You can go over the normal stack size limit by ticking the "Ignore stack size" toggle. E.g. a 999 stack of arrows
 
-![Large arrow stack example](https://john2143.com/f/lTiY.png)
+![Large arrow stack example](https://john2143.com/f/jfkG.png)
 
 * Spawn something you didnt mean to or didnt realise would be indestructible? You can undo it by pressing the Undo hotkey, defaults to left ctrl + z
 
@@ -54,6 +54,7 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 ## Config
 
 In your BepInEx/Config there is a config file that can be used to change the hotkeys to open/close the menu, spawn items and undo. Be aware setting this to a letter will cause the menu to close if you type it in the search box!
+The config can also be used to change the menu width.
 
 ## Installation
 
@@ -62,6 +63,10 @@ In your BepInEx/Config there is a config file that can be used to change the hot
 2. If you have the zip, extract within your BepInEx plugins folder. Otherwise place the .dll in a folder called "EasySpawner" in your BepInEx plugins folder.
 
 ## Changelog
+
+#### 1.6.0
+
+* Menu width now configurable from config.
 
 #### 1.5.0
 
