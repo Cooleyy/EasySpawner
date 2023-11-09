@@ -93,6 +93,10 @@ If you use r2modman you can set the path too, but this is optional.
 
 ## Changelog
 
+#### 1.6.1
+
+* Fix bug with internal gameobject name changes
+
 #### 1.6.0
 
 * Menu width now configurable from config.
