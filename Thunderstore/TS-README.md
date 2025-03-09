@@ -64,6 +64,10 @@ The config can also be used to change the menu width.
 
 ## Changelog
 
+#### 1.6.1
+
+* Fix bug with internal gameobject name changes
+
 #### 1.6.0
 
 * Menu width now configurable from config.

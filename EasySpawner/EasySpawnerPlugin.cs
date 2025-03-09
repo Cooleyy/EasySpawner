@@ -9,10 +9,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using EasySpawner.UI;
 using EasySpawner.Config;
+using UnityEngine.SceneManagement;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.6.0")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.6.1")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {
@@ -144,6 +145,55 @@ namespace EasySpawner
             }
         }
 
+        private static Transform FindGUIRoot()
+        {
+            var rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+            foreach (var rootObject in rootGameObjects)
+            {
+                var name = rootObject.name;
+
+                if (name == "GuiRoot")
+                {
+                    return rootObject.transform.Find("GUI");
+                }
+
+                if (name == "_GameMain")
+                {
+                    return rootObject.transform.Find("LoadingGUI");
+                }
+            }
+
+            return null;
+        }
+
+        private GameObject CreateCustomGUI(string name, int sortingOrder, Transform parent)
+        {
+            GameObject CustomGUI = new GameObject(name, typeof(RectTransform), typeof(GuiPixelFix), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            CustomGUI.layer = 5;
+            CustomGUI.transform.SetParent(parent.transform, false);
+
+            var rectTransform = CustomGUI.GetComponent<RectTransform>();
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.one;
+            rectTransform.offsetMin = Vector2.zero;
+            rectTransform.offsetMax = Vector2.zero;
+            rectTransform.anchoredPosition = Vector2.zero;
+
+            var canvas = CustomGUI.GetComponent<Canvas>();
+            canvas.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1 | AdditionalCanvasShaderChannels.Normal | AdditionalCanvasShaderChannels.Tangent;
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = sortingOrder;
+
+            var canvasScaler = CustomGUI.GetComponent<CanvasScaler>();
+            canvasScaler.referencePixelsPerUnit = 50;
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            //canvasScaler.scaleFactor = 0.5f;
+
+            return CustomGUI;
+        }
+
         private void CreateMenu()
         {
             Debug.Log("Easy spawner: Loading menu prefab");
@@ -171,7 +221,8 @@ namespace EasySpawner
             menuGameObject = Instantiate(menuPrefab);
 
             //Attach menu to Valheims UI gameobject
-            var uiGO = GameObject.Find("IngameGui");
+            //var uiGO = GameObject.Find("IngameGui");
+            Transform uiGO = FindGUIRoot();
 
             if (!uiGO)
             {
@@ -179,9 +230,13 @@ namespace EasySpawner
                 return;
             }
 
-            menuGameObject.transform.SetParent(uiGO.transform);
-            menuGameObject.transform.localScale = new Vector3(1f, 1f, 1f);
-            menuGameObject.transform.localPosition = new Vector3(-650, 0, 0);
+            GameObject customGUI = CreateCustomGUI("easyspawnerCanvas", 2000, uiGO);
+            customGUI.transform.SetAsLastSibling();
+
+            menuGameObject.transform.SetParent(customGUI.transform, false);
+            menuGameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            menuGameObject.transform.localPosition = new Vector3(-250, -100, 0);
+            //menuGameObject.transform.position = new Vector2(-0, 0);
 
             playerNames = GetPlayerNames();
 
