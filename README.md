@@ -93,6 +93,11 @@ If you use r2modman you can set the path too, but this is optional.
 
 ## Changelog
 
+#### 1.6.2
+
+* Fix Menu UI object not appearing in new UI update
+* Default width is now 600 from 450
+
 #### 1.6.1
 
 * Fix bug with internal gameobject name changes
