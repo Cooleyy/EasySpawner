@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.6.1")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.6.2")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {
