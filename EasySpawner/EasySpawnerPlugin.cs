@@ -258,9 +258,8 @@ namespace EasySpawner
             customGUI.transform.SetAsLastSibling();
 
             menuGameObject.transform.SetParent(customGUI.transform, false);
-            menuGameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            menuGameObject.transform.localPosition = new Vector3(-250, -100, 0);
-            //menuGameObject.transform.position = new Vector2(-0, 0);
+            menuGameObject.transform.localScale = new Vector3(EasySpawnerMenu.BaseMenuScale, EasySpawnerMenu.BaseMenuScale, EasySpawnerMenu.BaseMenuScale);
+            menuGameObject.transform.localPosition = new Vector3(-250, -25, 0);
 
             playerNames = GetPlayerNames();
 

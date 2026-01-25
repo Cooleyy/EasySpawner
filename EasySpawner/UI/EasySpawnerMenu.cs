@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,6 +72,9 @@ namespace EasySpawner.UI
             UpdateMenuSize(null, null);
             config.UIWidth.SettingChanged += UpdateMenuSize;
 
+            UpdateMenuScale(null, null);
+            config.UIScale.SettingChanged += UpdateMenuScale;
+
             //Initial player dropdown
             PlayerDropdown.ClearOptions();
             RebuildPlayerDropdown();
@@ -98,6 +101,16 @@ namespace EasySpawner.UI
         {
             RectTransform menuRect = (RectTransform) EasySpawnerPlugin.menuGameObject.transform;
             menuRect.sizeDelta = new Vector2(EasySpawnerPlugin.config.UIWidth.Value, menuRect.sizeDelta.y);
+        }
+
+        public const float BaseMenuScale = 0.4f;
+
+        private void UpdateMenuScale(object sender, EventArgs e)
+        {
+            Transform menuTransform = EasySpawnerPlugin.menuGameObject.transform;
+            float scale = Mathf.Clamp(EasySpawnerPlugin.config.UIScale.Value, 0.5f, 2.5f);
+            float finalScale = BaseMenuScale * scale;
+            menuTransform.localScale = new Vector3(finalScale, finalScale, finalScale);
         }
 
         public void PoolPrefabItem(PrefabItem item)
@@ -272,6 +285,7 @@ namespace EasySpawner.UI
             PrefabItems = null;
             PrefabItemPool = new Queue<PrefabItem>();
             EasySpawnerPlugin.config.UIWidth.SettingChanged -= UpdateMenuSize;
+            EasySpawnerPlugin.config.UIScale.SettingChanged -= UpdateMenuScale;
         }
     }
 }
