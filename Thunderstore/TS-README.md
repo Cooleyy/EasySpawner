@@ -64,6 +64,10 @@ The config can also be used to change the menu width.
 
 ## Changelog
 
+#### 1.6.3
+
+* Prevent opening menu while chat or other input fields are focused.
+
 #### 1.6.2
 
 * Fix Menu UI object not appearing in new UI update
