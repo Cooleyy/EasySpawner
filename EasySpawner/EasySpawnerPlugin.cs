@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Collections;
@@ -7,13 +7,14 @@ using BepInEx;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using EasySpawner.UI;
 using EasySpawner.Config;
 using UnityEngine.SceneManagement;
 
 namespace EasySpawner
 {
-    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.6.2")]
+    [BepInPlugin("cooley.easyspawner", "Easy Spawner", "1.6.3")]
     [BepInProcess("valheim.exe")]
     public class EasySpawnerPlugin : BaseUnityPlugin
     {
@@ -50,7 +51,7 @@ namespace EasySpawner
         {
             if(Player.m_localPlayer)
             {
-                if (config.IfMenuHotkeyPressed())
+                if (!IsAnyInputFocused() && config.IfMenuHotkeyPressed())
                 {
                     if (!menuGameObject)
                         CreateMenu();
@@ -70,6 +71,29 @@ namespace EasySpawner
                     }
                 }
             }
+        }
+
+        private static bool IsAnyInputFocused()
+        {
+            if (EventSystem.current == null)
+                return false;
+
+            var selected = EventSystem.current.currentSelectedGameObject;
+            if (selected == null)
+                return false;
+
+            var inputField = selected.GetComponent<InputField>();
+            if (inputField != null && inputField.isFocused)
+                return true;
+
+            // Avoid a hard reference to TextMeshPro by using reflection.
+            var tmpInput = selected.GetComponent("TMP_InputField");
+            if (tmpInput == null)
+                return false;
+
+            var isFocusedProp = tmpInput.GetType().GetProperty("isFocused");
+            return isFocusedProp != null && isFocusedProp.PropertyType == typeof(bool) &&
+                   (bool)isFocusedProp.GetValue(tmpInput);
         }
 
         public static AssetBundle GetAssetBundleFromResources(string fileName)
@@ -234,9 +258,8 @@ namespace EasySpawner
             customGUI.transform.SetAsLastSibling();
 
             menuGameObject.transform.SetParent(customGUI.transform, false);
-            menuGameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            menuGameObject.transform.localPosition = new Vector3(-250, -100, 0);
-            //menuGameObject.transform.position = new Vector2(-0, 0);
+            menuGameObject.transform.localScale = new Vector3(EasySpawnerMenu.BaseMenuScale, EasySpawnerMenu.BaseMenuScale, EasySpawnerMenu.BaseMenuScale);
+            menuGameObject.transform.localPosition = new Vector3(-250, -25, 0);
 
             playerNames = GetPlayerNames();
 

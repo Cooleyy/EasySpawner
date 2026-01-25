@@ -18,13 +18,13 @@ Note: The prefab names may differ from the in game name. E.g. The 5th boss Yaglu
 
 ## Menu UI
 <html>
-<img src="https://john2143.com/f/HTnw.png" width="450">
+<img src="https://2143.me/f/HTnw.png" width="450">
 </html>
 
 Example. Entering "copper" will provide all prefabs with "copper" contained in the name, here it provide Copper bar, Copper ore, Copper knife and three variants of a copper vein.
 
 <html>
-<img src="https://john2143.com/f/wDpg.png" width="450">
+<img src="https://2143.me/f/wDpg.png" width="450">
 </html>
 
 Clicking the spawn button, pressing "=" or "Numpad +" will create the selected prefab at the chosen player.
@@ -43,7 +43,7 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 * You can create Items/Npcs much higher level than the game normally permits. E.g. a level 999999999 Silver sword.
 
 <html>
-<img src="https://john2143.com/f/7BAE.png" width="450">
+<img src="https://2143.me/f/7BAE.png" width="450">
 </html>
 
 * You can tick the "Put in inventory" toggle to immediately place the item in your inventory. 
@@ -52,7 +52,7 @@ Clicking the spawn button, pressing "=" or "Numpad +" will create the selected p
 * You can go over the normal stack size limit by ticking the "Ignore stack size" toggle. E.g. a 999 stack of arrows.
 
 <html>
-<img src="https://john2143.com/f/jfkG.png" width="450">
+<img src="https://2143.me/f/jfkG.png" width="450">
 </html>
 
 * Spawn something you didnt mean to or didnt realise would be indestructible? You can undo it by pressing the Undo hotkey, defaults to left ctrl + z.
@@ -92,6 +92,11 @@ If you use r2modman you can set the path too, but this is optional.
 ````
 
 ## Changelog
+
+#### 1.6.3
+
+* Add menu scale config option.
+* Prevent opening menu while chat or other input fields are focused.
 
 #### 1.6.2
 

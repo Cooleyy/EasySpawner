@@ -1,4 +1,4 @@
-﻿using BepInEx.Configuration;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace EasySpawner.Config
@@ -16,6 +16,7 @@ namespace EasySpawner.Config
         public ConfigEntry<string> UndoHotkey;
         public ConfigEntry<string> UndoHotkeyModifier;
         public ConfigEntry<float> UIWidth;
+        public ConfigEntry<float> UIScale;
 
         public bool OpenHotkeyModifierSet;
         public bool SpawnHotkeyModifierSet;
@@ -35,6 +36,7 @@ namespace EasySpawner.Config
             UndoHotkeyModifier = ConfigFile.Bind("Hotkeys", "UndoHotkeyModifier", "left ctrl", "Modifier to Undo hotkey");
 
             UIWidth = ConfigFile.Bind("UI", "MenuWidth", 600f, "Width of the menu");
+            UIScale = ConfigFile.Bind("UI", "MenuScale", 1.0f, "Scale of the menu UI (1.0 = default)");
 
             FirstOpenHotkey.Value = FirstOpenHotkey.Value.ToLower();
             FirstOpenHotkeyModifier.Value = FirstOpenHotkeyModifier.Value.ToLower();
