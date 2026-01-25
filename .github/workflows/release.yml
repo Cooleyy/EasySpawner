@@ -1,0 +1,51 @@
+name: manual-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_release:
+        description: "Type YES to confirm release"
+        required: true
+        default: "NO"
+
+jobs:
+  build-release:
+    if: ${{ github.event.inputs.confirm_release == 'YES' }}
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore
+        run: msbuild EasySpawner.sln -t:Restore -p:Configuration=Release
+
+      - name: Build
+        run: msbuild EasySpawner.sln -p:Configuration=Release
+
+      - name: Read version
+        id: version
+        shell: pwsh
+        run: |
+          $content = Get-Content "EasySpawner/EasySpawnerPlugin.cs" -Raw
+          if ($content -match '\[BepInPlugin\(".*?",\s*".*?",\s*"([^"]+)"\)\]') {
+            $version = $Matches[1]
+            "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          } else {
+            throw "Version not found in EasySpawnerPlugin.cs"
+          }
+
+      - name: Package DLL
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item "EasySpawner/bin/Release/EasySpawner.dll" "dist/EasySpawner.dll"
+          Compress-Archive -Path "dist/EasySpawner.dll" -DestinationPath "dist/EasySpawner_${{ steps.version.outputs.version }}.zip" -Force
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          files: dist/EasySpawner_${{ steps.version.outputs.version }}.zip
