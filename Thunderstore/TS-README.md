@@ -66,6 +66,7 @@ The config can also be used to change the menu width.
 
 #### 1.6.3
 
+* Add menu scale config option.
 * Prevent opening menu while chat or other input fields are focused.
 
 #### 1.6.2

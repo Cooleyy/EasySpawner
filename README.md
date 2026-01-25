@@ -95,7 +95,9 @@ If you use r2modman you can set the path too, but this is optional.
 
 #### 1.6.3
 
+* Add menu scale config option.
 * Prevent opening menu while chat or other input fields are focused.
+
 #### 1.6.2
 
 * Fix Menu UI object not appearing in new UI update
