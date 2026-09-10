@@ -93,6 +93,10 @@ If you use r2modman you can set the path too, but this is optional.
 
 ## Changelog
 
+#### 1.7.0
+
+* Updated for the Valheim 1.0 release; rebuilt and smoke-tested on Valheim 1.0.7.
+
 #### 1.6.3
 
 * Add menu scale config option.
